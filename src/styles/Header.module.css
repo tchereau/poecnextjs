@@ -20,8 +20,19 @@
     cursor: pointer;
     user-select: none;
     font-size: 1.5rem;
+    flex-shrink: 0;
 
 }
+
+.container_sous_menu > li > span {
+    width: 1.2em; /* ajustez la largeur en fonction de la taille de l'icône */
+    height: 1.2em; /* ajustez la hauteur en fonction de la taille de l'icône */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 0.5em; /* ajustez la marge en fonction de vos préférences */
+  }
+  
 
 .container_sous_menu>li:hover{
     color: black;

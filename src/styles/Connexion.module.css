@@ -1,9 +1,80 @@
+
+.overlaye{
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    width: 100vw;
+    height: 100vh;
+    background-color:rgba(0, 0,0, 0.5);
+}
+
 .container{
-    border:2px solid black;
-    width:25%;
     position: absolute;
     top:50%;
     left:50%;
+    border:2px solid black;
+    width:40%;
+    padding: 2rem;
     transform: translate(-50%,-50%);
+    background-color: white;
+    min-height: 25%;
+    color: black;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    z-index: 300;
+    border-radius: 10px;
 }
+
+.titre{
+    text-align: center;
+    margin-bottom: 2.5rem;
+    color: rgb(33, 87, 190);
+}
+
+
+.form{
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    margin: auto;
+}
+
+.input{
+    line-height: 1.8rem;
+    border: 1px solid black;
+    margin-top: 5px;
+  
+}
+
+.input::placeholder{
+   padding-left: 10px;
+}
+
+.link{
+    font-size: 1rem;
+    text-align: center;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+}
+
+.bouton{
+    width: 45%;
+    padding: 0.5rem;
+    background-color: rgb(33, 87, 190);
+    color: white;
+    cursor: pointer;
+    border: 0.1ps solid black;
+}
+
+.btncontainer{
+    position: relative;
+    display: flex;
+    justify-content: space-around;
+ 
+}
+
+
+
 

@@ -3,7 +3,7 @@ import { Inter } from 'next/font/google'
 import styles from '@/styles/Home.module.css'
 import Header from '@/components/header'
 import Array from '@/components/array'
-import Connexion from '@/components/connexion'
+
 
 const inter = Inter({ subsets: ['latin'] })
 const tableau = [['Monsieur', 'Bidule',3000],['Madame', 'machine', 5000], ['Bernard','Arnault',500000, "Grand compte"]]
@@ -19,7 +19,7 @@ export default function Home() {
       </Head>
       <main className={styles.main}>
         <Header/>
-        <Connexion/>
+      
       </main>
     </>
   )
