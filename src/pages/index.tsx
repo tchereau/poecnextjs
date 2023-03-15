@@ -1,13 +1,10 @@
-import Head from 'next/head'
-import { Inter } from 'next/font/google'
-import styles from '@/styles/Home.module.css'
-import Header from '@/components/header'
-import Array from '@/components/array'
+import Head from "next/head";
+import { Inter } from "next/font/google";
+import styles from "@/styles/Home.module.css";
+import Header from "@/components/header";
 
+const inter = Inter({ subsets: ["latin"] });
 
-const inter = Inter({ subsets: ['latin'] })
-const tableau = [['Monsieur', 'Bidule',3000],['Madame', 'machine', 5000], ['Bernard','Arnault',500000, "Grand compte"]]
-const thead = ['Nom', 'Prénom', 'Chiffre d\'affaire', 'Nature']
 export default function Home() {
   return (
     <>
@@ -18,9 +15,8 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
-        <Header/>
-      
+        <Header />
       </main>
     </>
-  )
+  );
 }
