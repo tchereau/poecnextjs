@@ -45,11 +45,8 @@
     line-height: 1.8rem;
     border: 1px solid black;
     margin-top: 5px;
+    padding-left: 10px;
   
-}
-
-.input::placeholder{
-   padding-left: 10px;
 }
 
 .link{
