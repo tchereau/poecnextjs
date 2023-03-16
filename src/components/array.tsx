@@ -6,18 +6,18 @@ interface ArrayProps {
 
 export default function Array(props: ArrayProps) {
   return (
-    <table className={styles.center}>
+    <table className={styles.table}>
       <thead>
         <tr>
           {props.thead.map((value: string, index: number) => {
-            return <th>{value}</th>;
+            return <th className={styles.th}>{value}</th>;
           })}
         </tr>
       </thead>
       <tbody>
         {props.tableau.map((value: (string | number)[], index: number) => {
           return (
-            <tr key={index}>
+            <tr key={index}  className={styles.tr}>
               {value.map((value: string | number, index: number) => {
                 return (
                   <td className={styles.td} key={index}>

@@ -1,18 +1,18 @@
-import Array from "@/components/array";
 import Header from "@/components/header";
-
-const tableau = [
-  ["Monsieur", "Bidule", 3000],
-  ["Madame", "machine", 5000],
-  ["Bernard", "Arnault", 500000, "Grand compte"],
-];
-const thead = ["Nom", "Prénom", "Chiffre d'affaire", "Nature"];
+import home_style from "@/styles/Home.module.css";
+import Sidebar from "@/components/sidebar";
+import ClientList from "@/components/clientList";
+import { useState } from "react";
 
 export default function clients() {
+  const [listClientIsOpen, setListClientIsOpen] = useState(false);
+
   return (
     <>
       <Header />
-      <Array tableau={tableau} thead={thead} />
+      <Sidebar />
+      {listClientIsOpen && <ClientList />}
+      <main className={home_style.main}></main>
     </>
   );
 }
