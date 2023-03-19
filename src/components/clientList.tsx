@@ -1,5 +1,6 @@
 import client_list_styles from "@/styles/Array.module.css";
 import client from "../../public/clients.json";
+import { useEffect, useRef, useState } from "react";
 
 interface ClientProps {
   openEdit: () => void;
@@ -9,7 +10,8 @@ interface ClientProps {
   closeView: () => void;
 }
 
-const clientTab = client.clients;
+var clientTab = client.clients;
+
 const thead = () => {
   var key = [];
   for (var keys in clientTab[0]) {
@@ -29,9 +31,45 @@ export default function clientList({
   openClientView,
   closeView,
 }: ClientProps) {
+  const search = useRef<HTMLInputElement>(null);
+  var [currentClient, setCurrentClient] = useState(clientTab);
+  function addEventSearch() {
+    useEffect(() => {
+      document.addEventListener("keyup", () => {
+        var query = search.current?.value;
+        if (query == "") {
+          setCurrentClient(clientTab);
+        }
+        setCurrentClient((prevClientTab) =>
+          prevClientTab.filter((client) => {
+            if (query != undefined)
+              return (
+                client.Rue.toLowerCase().includes(query.toLowerCase()) ||
+                client["Nom de société"]
+                  .toLowerCase()
+                  .includes(query.toLowerCase()) ||
+                client["Ville"].toLowerCase().includes(query.toLowerCase()) ||
+                client["Dirigeant"]
+                  .toLowerCase()
+                  .includes(query.toLowerCase()) ||
+                client["Voie"].toLowerCase().includes(query.toLowerCase())
+              );
+          })
+        );
+      });
+    }, [search]);
+  }
+
+  addEventSearch();
   return (
     <div className={client_list_styles.center}>
       <h2>Liste des Clients</h2>
+      <input
+        id={client_list_styles.search}
+        type="text"
+        placeholder="search..."
+        ref={search}
+      ></input>
       <div className={client_list_styles.table_container}>
         <table className={client_list_styles.table}>
           <thead>
@@ -46,7 +84,7 @@ export default function clientList({
             </tr>
           </thead>
           <tbody className={client_list_styles.tbody}>
-            {clientTab.map((value, index) => {
+            {currentClient.map((value, index) => {
               return (
                 <tr
                   key={index}

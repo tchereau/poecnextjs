@@ -40,3 +40,10 @@
   background-color: grey;
   color: white;
 }
+
+#search{
+  display: block;
+  text-align: center;
+  margin: auto;
+  margin-top: 2rem;
+}
