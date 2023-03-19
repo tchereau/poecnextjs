@@ -5,6 +5,10 @@ import ClientList from "@/components/clientList";
 import ClientAdd from "@/components/clientAdd";
 import { useState } from "react";
 import ClientView from "@/components/clientView";
+import ProductList from "@/components/productList";
+import ProductAdd from "@/components/productAdd";
+import OrderList from "@/components/orderList";
+import OrderAdd from "@/components/orderAdd";
 
 export default function clients() {
   const [listClientIsOpen, setListClientIsOpen] = useState(false);
@@ -12,6 +16,10 @@ export default function clients() {
   const [editClientIsOpen, setEditClientIsOpen] = useState(false);
   const [client, setClient] = useState({});
   const [clientViewIsOpen, setClientViewIsOpen] = useState(false);
+  const [productListIsOpen, setProductListIsOpen] = useState(false);
+  const [productAddIsOpen, setProductAddIsOpen] = useState(false);
+  const [orderListIsOpen, setOrderListIsOpen] = useState(false);
+  const [orderAddIsOpen, setOrderAddIsOpen] = useState(false);
 
   const handleAddClick = () => {
     setAddClientIsOpen(true);
@@ -45,6 +53,38 @@ export default function clients() {
     setClientViewIsOpen(false);
   };
 
+  const handleProductListClick = () => {
+    setProductListIsOpen(true);
+  };
+
+  const handleProductListClose = () => {
+    setProductListIsOpen(false);
+  };
+
+  const handleProductAddClick = () => {
+    setProductAddIsOpen(true);
+  };
+
+  const handleProductAddClose = () => {
+    setProductAddIsOpen(false);
+  };
+
+  const handleOrderListClick = () => {
+    setOrderListIsOpen(true);
+  };
+
+  const handleOrderListClose = () => {
+    setOrderListIsOpen(false);
+  };
+
+  const handleOrderAddClick = () => {
+    setOrderAddIsOpen(true);
+  };
+
+  const handleOrderAddClose = () => {
+    setOrderAddIsOpen(false);
+  };
+
   return (
     <>
       <Header />
@@ -55,6 +95,14 @@ export default function clients() {
         closeAdd={handleAddClose}
         closeEdit={handleEditClose}
         closeView={handleViewClose}
+        openProductList={handleProductListClick}
+        closeProductList={handleProductListClose}
+        openProductAdd={handleProductAddClick}
+        closeProductAdd={handleProductAddClose}
+        openOrderList={handleOrderListClick}
+        closeOrderList={handleOrderListClose}
+        openOrderAdd={handleOrderAddClick}
+        closeOrderAdd={handleOrderAddClose}
       />
       {listClientIsOpen && (
         <ClientList
@@ -78,6 +126,10 @@ export default function clients() {
       {clientViewIsOpen && (
         <ClientView useClient={client} closeView={handleViewClose} />
       )}
+      {productListIsOpen && <ProductList />}
+      {productAddIsOpen && <ProductAdd />}
+      {orderListIsOpen && <OrderList />}
+      {orderAddIsOpen && <OrderAdd />}
     </>
   );
 }

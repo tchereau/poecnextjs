@@ -8,6 +8,14 @@ interface SideProps {
   closeAdd: () => void;
   closeEdit: () => void;
   closeView: () => void;
+  openProductList: () => void;
+  closeProductList: () => void;
+  openProductAdd: () => void;
+  closeProductAdd: () => void;
+  openOrderList: () => void;
+  closeOrderList: () => void;
+  openOrderAdd: () => void;
+  closeOrderAdd: () => void;
 }
 
 export default function sidebar({
@@ -17,10 +25,29 @@ export default function sidebar({
   closeAdd,
   closeEdit,
   closeView,
+  openProductList,
+  closeProductList,
+  openProductAdd,
+  closeProductAdd,
+  openOrderList,
+  closeOrderList,
+  openOrderAdd,
+  closeOrderAdd,
 }: SideProps) {
   const [displayClient, setDisplayClient] = useState(false);
   const [displayOrder, setDisplayOrder] = useState(false);
   const [displayProduct, setDisplayProduct] = useState(false);
+
+  function closeAll() {
+    closeList();
+    closeEdit();
+    closeAdd();
+    closeView();
+    closeProductList();
+    closeProductAdd();
+    closeOrderList();
+    closeOrderAdd();
+  }
 
   const toggleDisplayClient = () => {
     setDisplayClient(!displayClient);
@@ -42,10 +69,8 @@ export default function sidebar({
       <ul className={displayClient ? "null" : side_bar_style.display}>
         <li
           onClick={() => {
+            closeAll();
             openList();
-            closeAdd();
-            closeEdit();
-            closeView();
           }}
           className={side_bar_style.li}
         >
@@ -53,10 +78,8 @@ export default function sidebar({
         </li>
         <li
           onClick={() => {
+            closeAll();
             openAdd();
-            closeList();
-            closeEdit();
-            closeView();
           }}
           className={side_bar_style.li}
         >
@@ -69,25 +92,21 @@ export default function sidebar({
       <ul className={displayOrder ? "null" : side_bar_style.display}>
         <li
           onClick={() => {
-            openList();
-            closeAdd();
-            closeEdit();
-            closeView();
+            closeAll();
+            openOrderList();
           }}
           className={side_bar_style.li}
         >
-          Liste clients
+          Liste commandes
         </li>
         <li
           onClick={() => {
-            openAdd();
-            closeList();
-            closeEdit();
-            closeView();
+            closeAll();
+            openOrderAdd();
           }}
           className={side_bar_style.li}
         >
-          Ajouter client
+          Créer une commande
         </li>
       </ul>
       <h3 className={side_bar_style.h3} onClick={toggleDisplayProduct}>
@@ -96,23 +115,21 @@ export default function sidebar({
       <ul className={displayProduct ? "null" : side_bar_style.display}>
         <li
           onClick={() => {
-            openList();
-            closeAdd();
-            closeEdit();
+            closeAll();
+            openProductList();
           }}
           className={side_bar_style.li}
         >
-          Liste clients
+          Liste produits
         </li>
         <li
           onClick={() => {
-            openAdd();
-            closeList();
-            closeEdit();
+            closeAll();
+            openProductAdd();
           }}
           className={side_bar_style.li}
         >
-          Ajouter client
+          Ajouter produit
         </li>
       </ul>
     </div>

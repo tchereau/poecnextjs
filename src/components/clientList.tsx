@@ -37,9 +37,7 @@ export default function clientList({
     useEffect(() => {
       document.addEventListener("keyup", () => {
         var query = search.current?.value;
-        if (query == "") {
-          setCurrentClient(clientTab);
-        }
+        setCurrentClient(clientTab);
         setCurrentClient((prevClientTab) =>
           prevClientTab.filter((client) => {
             if (query != undefined)
