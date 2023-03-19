@@ -5,6 +5,8 @@ interface ClientProps {
   openEdit: () => void;
   closeList: () => void;
   getClient: (client: any) => void;
+  openClientView: () => void;
+  closeView: () => void;
 }
 
 const clientTab = client.clients;
@@ -24,6 +26,8 @@ export default function clientList({
   openEdit,
   getClient,
   closeList,
+  openClientView,
+  closeView,
 }: ClientProps) {
   return (
     <div className={client_list_styles.center}>
@@ -44,7 +48,15 @@ export default function clientList({
           <tbody className={client_list_styles.tbody}>
             {clientTab.map((value, index) => {
               return (
-                <tr key={index} className={client_list_styles.tr}>
+                <tr
+                  key={index}
+                  className={client_list_styles.tr}
+                  onClick={() => {
+                    openClientView();
+                    getClient(value);
+                    closeList();
+                  }}
+                >
                   <td className={client_list_styles.td}>
                     {value["Nom de société"]}
                   </td>
@@ -63,7 +75,8 @@ export default function clientList({
                   <td>
                     <button
                       className={client_list_styles.button}
-                      onClick={() => {
+                      onClick={(e) => {
+                        e.stopPropagation();
                         deleteClient(value);
                       }}
                     >
@@ -73,10 +86,12 @@ export default function clientList({
                   <td>
                     <button
                       className={client_list_styles.button}
-                      onClick={() => {
+                      onClick={(e) => {
+                        e.stopPropagation();
                         getClient(value);
                         openEdit();
                         closeList();
+                        closeView();
                       }}
                     >
                       Modifier

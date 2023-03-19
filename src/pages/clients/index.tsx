@@ -4,12 +4,14 @@ import Sidebar from "@/components/sidebar";
 import ClientList from "@/components/clientList";
 import ClientAdd from "@/components/clientAdd";
 import { useState } from "react";
+import ClientView from "@/components/clientView";
 
 export default function clients() {
   const [listClientIsOpen, setListClientIsOpen] = useState(false);
   const [addClientIsOpen, setAddClientIsOpen] = useState(false);
   const [editClientIsOpen, setEditClientIsOpen] = useState(false);
   const [client, setClient] = useState({});
+  const [clientViewIsOpen, setClientViewIsOpen] = useState(false);
 
   const handleAddClick = () => {
     setAddClientIsOpen(true);
@@ -35,6 +37,14 @@ export default function clients() {
     setEditClientIsOpen(false);
   };
 
+  const handleViewClick = () => {
+    setClientViewIsOpen(true);
+  };
+
+  const handleViewClose = () => {
+    setClientViewIsOpen(false);
+  };
+
   return (
     <>
       <Header />
@@ -44,12 +54,15 @@ export default function clients() {
         openAdd={handleAddClick}
         closeAdd={handleAddClose}
         closeEdit={handleEditClose}
+        closeView={handleViewClose}
       />
       {listClientIsOpen && (
         <ClientList
           openEdit={handleEditClick}
           getClient={setClient}
           closeList={handleListClose}
+          openClientView={handleViewClick}
+          closeView={handleViewClose}
         />
       )}
       {addClientIsOpen && (
@@ -62,7 +75,9 @@ export default function clients() {
           openList={handleListClick}
         />
       )}
-      <main className={home_style.main}></main>
+      {clientViewIsOpen && (
+        <ClientView useClient={client} closeView={handleViewClose} />
+      )}
     </>
   );
 }

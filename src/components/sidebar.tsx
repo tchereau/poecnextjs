@@ -7,6 +7,7 @@ interface SideProps {
   openAdd: () => void;
   closeAdd: () => void;
   closeEdit: () => void;
+  closeView: () => void;
 }
 
 export default function sidebar({
@@ -15,6 +16,7 @@ export default function sidebar({
   openAdd,
   closeAdd,
   closeEdit,
+  closeView,
 }: SideProps) {
   const [displayClient, setDisplayClient] = useState(false);
   const [displayOrder, setDisplayOrder] = useState(false);
@@ -43,6 +45,7 @@ export default function sidebar({
             openList();
             closeAdd();
             closeEdit();
+            closeView();
           }}
           className={side_bar_style.li}
         >
@@ -53,6 +56,7 @@ export default function sidebar({
             openAdd();
             closeList();
             closeEdit();
+            closeView();
           }}
           className={side_bar_style.li}
         >
@@ -68,6 +72,7 @@ export default function sidebar({
             openList();
             closeAdd();
             closeEdit();
+            closeView();
           }}
           className={side_bar_style.li}
         >
@@ -78,6 +83,7 @@ export default function sidebar({
             openAdd();
             closeList();
             closeEdit();
+            closeView();
           }}
           className={side_bar_style.li}
         >

@@ -36,7 +36,7 @@
   background-color: white;
 }
 
-.tr:hover {
+.tr:hover td:not(:last-child):not(:nth-last-child(2)) {
   background-color: grey;
   color: white;
 }
