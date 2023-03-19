@@ -1,8 +1,6 @@
 import client_add_style from "@/styles/ClientAdd.module.css";
-
-interface ClientProps {
-  useClient?: object;
-}
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
 function validateForm(e: React.FormEvent<HTMLFormElement>) {
   e.preventDefault();
@@ -19,25 +17,43 @@ function validateForm(e: React.FormEvent<HTMLFormElement>) {
 }
 
 function objectToArray(object: any) {
-  var monTableau = Object.keys(object.useClient).map(function (cle) {
-    return [object.useClient[cle]];
+  var monTableau = Object.keys(object).map(function (cle) {
+    return [object[cle]];
   });
   return monTableau;
 }
 
 var client: any;
 
-export default function clientAdd(useClient?: ClientProps) {
-  if (useClient?.useClient) {
+interface ClientProps {
+  useClient?: any;
+  closeEdit: () => void;
+  openList: () => void;
+}
+
+export default function clientAdd({
+  useClient,
+  closeEdit,
+  openList,
+}: ClientProps) {
+  if (useClient) {
     client = objectToArray(useClient);
-    console.log(client);
   }
   return (
     <>
       <div className={client_add_style.container}>
-        <h2>
-          {useClient?.useClient ? "Modifier un client" : "Ajouter un client"}
-        </h2>
+        {useClient && (
+          <span className={client_add_style.back}>
+            <FontAwesomeIcon
+              icon={faCircleArrowLeft}
+              onClick={() => {
+                openList();
+                closeEdit();
+              }}
+            />
+          </span>
+        )}
+        <h2>{useClient ? "Modifier un client" : "Ajouter un client"}</h2>
         <form className={client_add_style.form} onSubmit={validateForm}>
           <label className={client_add_style.label}>
             Entreprise
@@ -45,7 +61,7 @@ export default function clientAdd(useClient?: ClientProps) {
               type="text"
               name="entreprise"
               placeholder="Entreprise"
-              value={useClient?.useClient ? client[0] : ""}
+              defaultValue={useClient ? client[0] : ""}
             />
           </label>
 
@@ -55,7 +71,7 @@ export default function clientAdd(useClient?: ClientProps) {
               type="text"
               name="numeroVoie"
               placeholder="Numéro de voie"
-              value={useClient?.useClient ? client[1] : ""}
+              defaultValue={useClient ? client[1] : ""}
             />
           </label>
 
@@ -65,7 +81,7 @@ export default function clientAdd(useClient?: ClientProps) {
               type="text"
               name="rue"
               placeholder="Rue"
-              value={useClient?.useClient ? client[2] : ""}
+              defaultValue={useClient ? client[2] : ""}
             />
           </label>
 
@@ -75,7 +91,7 @@ export default function clientAdd(useClient?: ClientProps) {
               type="text"
               name="codePostal"
               placeholder="Code postal"
-              value={useClient?.useClient ? client[3] : ""}
+              defaultValue={useClient ? client[3] : ""}
             />
           </label>
 
@@ -85,7 +101,7 @@ export default function clientAdd(useClient?: ClientProps) {
               type="text"
               name="ville"
               placeholder="Ville"
-              value={useClient?.useClient ? client[4] : ""}
+              defaultValue={useClient ? client[4] : ""}
             />
           </label>
 
@@ -95,7 +111,7 @@ export default function clientAdd(useClient?: ClientProps) {
               type="text"
               name="dirigeant"
               placeholder="Dirigeant"
-              value={useClient?.useClient ? client[4] : ""}
+              defaultValue={useClient ? client[4] : ""}
             />
           </label>
 
@@ -105,13 +121,11 @@ export default function clientAdd(useClient?: ClientProps) {
               type="text"
               name="numeroTelephone"
               placeholder="Numéro de téléphone"
-              value={useClient?.useClient ? client[5] : ""}
+              defaultValue={useClient ? client[5] : ""}
             />
           </label>
 
-          <button type="submit">
-            {useClient?.useClient ? "Modifier" : "Ajouter"}
-          </button>
+          <button type="submit">{useClient ? "Modifier" : "Ajouter"}</button>
         </form>
       </div>
     </>

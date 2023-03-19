@@ -5,7 +5,25 @@
   width: 15vw;
 }
 
-.li {
-  cursor: pointer;
+.li,
+.h3 {
   margin-left: 2rem;
+  list-style-type: none;
+
+  margin: 0;
+  padding: 1rem;
+  cursor: pointer;
+}
+
+.li {
+  padding-left: 3rem;
+}
+
+.li:hover,
+.h3:hover {
+  background-color: #f1f1f1;
+}
+
+.display {
+  display: none;
 }

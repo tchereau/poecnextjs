@@ -52,8 +52,16 @@ export default function clients() {
           closeList={handleListClose}
         />
       )}
-      {addClientIsOpen && <ClientAdd />}
-      {editClientIsOpen && <ClientAdd useClient={client} />}
+      {addClientIsOpen && (
+        <ClientAdd closeEdit={handleEditClose} openList={handleListClick} />
+      )}
+      {editClientIsOpen && (
+        <ClientAdd
+          useClient={client}
+          closeEdit={handleEditClose}
+          openList={handleListClick}
+        />
+      )}
       <main className={home_style.main}></main>
     </>
   );
