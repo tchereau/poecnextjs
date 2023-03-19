@@ -1,41 +1,42 @@
-.center{
-    text-align: center;
-    border: 3px solid block;
+.center {
+  text-align: center;
+  border: 3px solid block;
 }
 
-.h2{
-    margin-top: 2rem;
+.h2 {
+  margin-top: 2rem;
 }
 
-.table_container{
-    display: inline-block;
-    text-align: center;
-    margin-top: 2rem;
-    max-height: 60vh;
-    overflow-y: scroll;
-    text-align: center;
+.table_container {
+  display: inline-block;
+  text-align: center;
+  margin-top: 2rem;
+  max-height: 60vh;
+  overflow-y: scroll;
+  text-align: center;
 }
 
-.table{
-    border-collapse: collapse;
-    cursor: pointer;
+.table {
+  border-collapse: collapse;
+  cursor: pointer;
 }
 
-.th{
-    padding: 0.5em;
-    border: 1px solid black;
+.th {
+  padding: 0.5em;
+  border: 1px solid black;
 }
 
-.td{
-    padding: 0.5em;
-    border: 1px solid black;
+.td {
+  padding: 0.5em;
+  border: 1px solid black;
+  min-width: 5rem;
 }
 
-.tr:nth-child(2n+1){
-    background-color: white;
+.tr:nth-child(2n + 1) {
+  background-color: white;
 }
 
-.tr:hover{
-    background-color: grey;
-    color:white;
+.tr:hover {
+  background-color: grey;
+  color: white;
 }
