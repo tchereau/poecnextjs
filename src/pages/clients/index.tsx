@@ -8,6 +8,8 @@ import { useState } from "react";
 export default function clients() {
   const [listClientIsOpen, setListClientIsOpen] = useState(false);
   const [addClientIsOpen, setAddClientIsOpen] = useState(false);
+  const [editClientIsOpen, setEditClientIsOpen] = useState(false);
+  const [client, setClient] = useState({});
 
   const handleAddClick = () => {
     setAddClientIsOpen(true);
@@ -17,25 +19,41 @@ export default function clients() {
     setAddClientIsOpen(false);
   };
 
-  const handleClick = () => {
+  const handleListClick = () => {
     setListClientIsOpen(true);
   };
 
-  const handleClose = () => {
+  const handleListClose = () => {
     setListClientIsOpen(false);
+  };
+
+  const handleEditClick = () => {
+    setEditClientIsOpen(true);
+  };
+
+  const handleEditClose = () => {
+    setEditClientIsOpen(false);
   };
 
   return (
     <>
       <Header />
       <Sidebar
-        openList={handleClick}
-        closeList={handleClose}
+        openList={handleListClick}
+        closeList={handleListClose}
         openAdd={handleAddClick}
         closeAdd={handleAddClose}
+        closeEdit={handleEditClose}
       />
-      {listClientIsOpen && <ClientList />}
+      {listClientIsOpen && (
+        <ClientList
+          openEdit={handleEditClick}
+          getClient={setClient}
+          closeList={handleListClose}
+        />
+      )}
       {addClientIsOpen && <ClientAdd />}
+      {editClientIsOpen && <ClientAdd useClient={client} />}
       <main className={home_style.main}></main>
     </>
   );

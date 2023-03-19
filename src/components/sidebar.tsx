@@ -4,6 +4,7 @@ interface SideProps {
   closeList: () => void;
   openAdd: () => void;
   closeAdd: () => void;
+  closeEdit: () => void;
 }
 
 export default function sidebar({
@@ -11,6 +12,7 @@ export default function sidebar({
   closeList,
   openAdd,
   closeAdd,
+  closeEdit,
 }: SideProps) {
   return (
     <div className={side_bar_style.container}>
@@ -20,6 +22,7 @@ export default function sidebar({
           onClick={() => {
             openList();
             closeAdd();
+            closeEdit();
           }}
           className={side_bar_style.li}
         >
@@ -29,6 +32,7 @@ export default function sidebar({
           onClick={() => {
             openAdd();
             closeList();
+            closeEdit();
           }}
           className={side_bar_style.li}
         >

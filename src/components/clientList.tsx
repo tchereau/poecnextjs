@@ -1,6 +1,12 @@
 import client_list_styles from "@/styles/Array.module.css";
 import client from "../../public/clients.json";
 
+interface ClientProps {
+  openEdit: () => void;
+  closeList: () => void;
+  getClient: (client: any) => void;
+}
+
 const clientTab = client.clients;
 const thead = () => {
   var key = [];
@@ -14,11 +20,11 @@ function deleteClient(client: any) {
   console.log(client);
 }
 
-function editClient(client: any) {
-  console.log(client);
-}
-
-export default function clientList() {
+export default function clientList({
+  openEdit,
+  getClient,
+  closeList,
+}: ClientProps) {
   return (
     <div className={client_list_styles.center}>
       <h2>Liste des Clients</h2>
@@ -27,7 +33,11 @@ export default function clientList() {
           <thead>
             <tr>
               {thead().map((value: string, index: number) => {
-                return <th className={client_list_styles.th}>{value}</th>;
+                return (
+                  <th key={index} className={client_list_styles.th}>
+                    {value}
+                  </th>
+                );
               })}
             </tr>
           </thead>
@@ -64,7 +74,9 @@ export default function clientList() {
                     <button
                       className={client_list_styles.button}
                       onClick={() => {
-                        editClient(value);
+                        getClient(value);
+                        openEdit();
+                        closeList();
                       }}
                     >
                       Modifier
