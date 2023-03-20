@@ -1,4 +1,3 @@
-import Image from "next/image";
 import styles from "@/styles/Header.module.css";
 import localFont from "next/font/local";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -20,20 +19,30 @@ export default function Header() {
     setIsOpen(false);
   };
 
+  const reload = () => {
+    window.location.reload();
+  };
+
+  const nothing = () => {
+    if (window.location.pathname === "/") {
+      window.location.reload();
+    }
+  };
+
   return (
     <>
       <div>
         <div className={styles.container}>
           <h1 className={myFont.className}>
-            <Link href="/">HSTAR</Link>
+            <Link href="/" onClick={nothing}>
+              HSTAR
+            </Link>
           </h1>
           <div>
             <ul className={styles.container_sous_menu}>
               <li>
-                <Link href="/clients">Clients</Link>
+                <Link href="/statistiques">Statistiques</Link>
               </li>
-              <li>Commandes</li>
-              <li>Statistiques</li>
               <li>
                 <span>
                   <FontAwesomeIcon icon={faUser} onClick={handleClick} />

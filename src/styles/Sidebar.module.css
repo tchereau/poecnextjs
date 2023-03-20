@@ -9,7 +9,7 @@
 .h3 {
   margin-left: 2rem;
   list-style-type: none;
-
+  user-select: none;
   margin: 0;
   padding: 1rem;
   cursor: pointer;
