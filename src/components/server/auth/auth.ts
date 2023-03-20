@@ -7,8 +7,8 @@ import { use } from 'react';
 export default class Auth{
 
   async generateToken(user: String) {
-    console.log(user.username)
-    const token = jwt.sign({ user: user.username, exp: Math.floor(Date.now() / 1000) + (60 * 60), }, process.env.JWT_SECRET)
+    console.log(user)
+    const token = jwt.sign({ user: user, exp: Math.floor(Date.now() / 1000) + (60 * 60), }, process.env.JWT_SECRET)
     return token;
   }
   
@@ -36,51 +36,22 @@ export default class Auth{
       const user = {
         username: rows[0].identifiant,
       };
-      //console.log(user)
-      const token = this.generateToken(user);
-      return { user, token };
+      return true
     } else {
-      return null;
+      return false;
     }
   }
 
-  async VerifToken(token) {
-    const bdd = new Bdd();
-
-    let conn;
-    try{
-      conn = await bdd.pool.getConnection().then(async conn => {return conn;})
-    }catch(e){
-      console.log(e);
-      //bdd.end();
-      return false;
-    }
-
-    let coon2 = await Bdd().conn;
-    let rows;
-    try{
-      rows = await conn.query("SELECT * FROM users WHERE token = ?", [token]);
-    }catch(e){
-      console.log(e);
-      //bdd.end();
-      return false;
-    }
-
-    if(rows.length === 0){
-      return false;
-    }
-    return true;
-  }
-
-  async Login(username, password) {
+  async Login(username: String, password: String) {
 
     let user = await this.VerifLogin(username, password);
-    if(user === null){
+    if(user === false){
       return false;
     }
     // generate token
     //let token = jwt.sign({ user: user.username }, process.env.JWT_SECRET, { expiresIn: '1h' });
-    let token = await this.generateToken(user.user);
+    let token = await this.generateToken(username);
+
     // save token in db
     const bdd = new Bdd();
     const conn = await bdd.pool.getConnection().then(async conn => {return conn;})
@@ -90,12 +61,8 @@ export default class Auth{
       await conn.query("UPDATE users SET token = ? WHERE identifiant = ?", [token, username]);
     }catch(e){
       console.log(e);
-      //pool.end();
       return false;
     }
-
-    //pool.end();
-    // return token
     return token;
   }
 
