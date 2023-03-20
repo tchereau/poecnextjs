@@ -1,0 +1,12 @@
+.container{
+    margin-bottom: 2rem;
+    width: 40%;
+}
+
+.flex{
+    margin-top: 2rem;
+    display: flex;
+    min-height: 100vh;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}

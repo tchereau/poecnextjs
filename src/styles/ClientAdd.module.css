@@ -1,0 +1,31 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  margin-top: 2rem;
+  width: 50%;
+}
+
+.label {
+  display: flex;
+  flex-direction: column;
+}
+
+.back {
+  font-size: 2rem;
+  position: absolute;
+  top: 10rem;
+  left: 30rem;
+  cursor: pointer;
+  color: rgb(33, 87, 190);
+}
+
+.back:hover {
+  color: white;
+}

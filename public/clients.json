@@ -1,0 +1,166 @@
+{
+    "clients": [
+        {
+            "Nom de société": "Société 1",
+            "Voie": "Rue de la Voie",
+            "Rue": "2",
+            "Ville": "Paris",
+            "Code Postal": "75001",
+            "Dirigeant": "Jean Dupont",
+            "Téléphone": "+33 1 23 45 67 89"
+        },
+        {
+            "Nom de société": "Société 2",
+            "Voie": "Avenue des Champs-Élysées",
+            "Rue": "10",
+            "Ville": "Paris",
+            "Code Postal": "75008",
+            "Dirigeant": "Pierre Martin",
+            "Téléphone": "+33 1 23 45 67 90"
+        },
+        {
+            "Nom de société": "Société 3",
+            "Voie": "Rue de la Liberté",
+            "Rue": "25",
+            "Ville": "Lyon",
+            "Code Postal": "69001",
+            "Dirigeant": "Marie Durand",
+            "Téléphone": "+33 1 23 45 67 91"
+        },
+        {
+            "Nom de société": "Société 4",
+            "Voie": "Boulevard Saint-Germain",
+            "Rue": "12",
+            "Ville": "Paris",
+            "Code Postal": "75006",
+            "Dirigeant": "Paul Dupuis",
+            "Téléphone": "+33 1 23 45 67 92"
+        },
+        {
+            "Nom de société": "Société 5",
+            "Voie": "Rue de la Paix",
+            "Rue": "15",
+            "Ville": "Paris",
+            "Code Postal": "75002",
+            "Dirigeant": "Anne Marie",
+            "Téléphone": "+33 1 23 45 67 93"
+        },
+        {
+            "Nom de société": "Société 6",
+            "Voie": "Place Vendôme",
+            "Rue": "6",
+            "Ville": "Paris",
+            "Code Postal": "75001",
+            "Dirigeant": "Jacques Martin",
+            "Téléphone": "+33 1 23 45 67 94"
+        },
+        {
+            "Nom de société": "Société 7",
+            "Voie": "Rue du Faubourg Saint-Honoré",
+            "Rue": "20",
+            "Ville": "Paris",
+            "Code Postal": "75008",
+            "Dirigeant": "Sophie Dupont",
+            "Téléphone": "+33 1 23 45 67 95"
+        },
+        {
+            "Nom de société": "Société 8",
+            "Voie": "Avenue de la Grande Armée",
+            "Rue": "30",
+            "Ville": "Paris",
+            "Code Postal": "75017",
+            "Dirigeant": "Jeanne Martin",
+            "Téléphone": "+33 1 23 45 67 96"
+        },
+        {
+            "Nom de société": "Société 9",
+            "Voie": "Rue des Petits Champs",
+            "Rue": "5",
+            "Ville": "Paris",
+            "Code Postal": "44000",
+            "Dirigeant": "Thomas Moussu",
+            "Téléphone": "+33 1 23 45 67 89"
+        },
+        {
+            "Nom de société": "Société 1",
+            "Voie": "Rue de la Voie",
+            "Rue": "2",
+            "Ville": "Paris",
+            "Code Postal": "75001",
+            "Dirigeant": "Jean Dupont",
+            "Téléphone": "+33 1 23 45 67 89"
+        },
+        {
+            "Nom de société": "Société 2",
+            "Voie": "Avenue des Champs-Élysées",
+            "Rue": "10",
+            "Ville": "Paris",
+            "Code Postal": "75008",
+            "Dirigeant": "Pierre Martin",
+            "Téléphone": "+33 1 23 45 67 90"
+        },
+        {
+            "Nom de société": "Société 3",
+            "Voie": "Rue de la Liberté",
+            "Rue": "25",
+            "Ville": "Lyon",
+            "Code Postal": "69001",
+            "Dirigeant": "Marie Durand",
+            "Téléphone": "+33 1 23 45 67 91"
+        },
+        {
+            "Nom de société": "Société 4",
+            "Voie": "Boulevard Saint-Germain",
+            "Rue": "12",
+            "Ville": "Paris",
+            "Code Postal": "75006",
+            "Dirigeant": "Paul Dupuis",
+            "Téléphone": "+33 1 23 45 67 92"
+        },
+        {
+            "Nom de société": "Société 5",
+            "Voie": "Rue de la Paix",
+            "Rue": "15",
+            "Ville": "Paris",
+            "Code Postal": "75002",
+            "Dirigeant": "Anne Marie",
+            "Téléphone": "+33 1 23 45 67 93"
+        },
+        {
+            "Nom de société": "Société 6",
+            "Voie": "Place Vendôme",
+            "Rue": "6",
+            "Ville": "Paris",
+            "Code Postal": "75001",
+            "Dirigeant": "Jacques Martin",
+            "Téléphone": "+33 1 23 45 67 94"
+        },
+        {
+            "Nom de société": "Société 7",
+            "Voie": "Rue du Faubourg Saint-Honoré",
+            "Rue": "20",
+            "Ville": "Paris",
+            "Code Postal": "75008",
+            "Dirigeant": "Sophie Dupont",
+            "Téléphone": "+33 1 23 45 67 95"
+        },
+        {
+            "Nom de société": "Société 8",
+            "Voie": "Avenue de la Grande Armée",
+            "Rue": "30",
+            "Ville": "Paris",
+            "Code Postal": "75017",
+            "Dirigeant": "Jeanne Martin",
+            "Téléphone": "+33 1 23 45 67 96"
+        },
+        {
+            "Nom de société": "Société 9",
+            "Voie": "Rue des Petits Champs",
+            "Rue": "5",
+            "Ville": "Paris",
+            "Code Postal": "44000",
+            "Dirigeant": "Thomas Moussu",
+            "Téléphone": "+33 1 23 45 67 89"
+        }
+    ]
+}
