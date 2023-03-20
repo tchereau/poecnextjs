@@ -12,6 +12,7 @@ import ProductList from "@/components/productList";
 import ProductAdd from "@/components/productAdd";
 import OrderList from "@/components/orderList";
 import OrderAdd from "@/components/orderAdd";
+import Image from "next/image";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -152,6 +153,17 @@ export default function Home() {
         !orderAddIsOpen && (
           <div>
             <h2>Bienvenue sur HSTAR, le CRM qu'on M</h2>
+
+            <div>
+              <Image
+                src="/vignetteClientList.png"
+                alt="Picture of the author"
+                unoptimized={true}
+                height={250}
+                width={400}
+                className={home_style.vignette}
+              />
+            </div>
           </div>
         )}
     </>
