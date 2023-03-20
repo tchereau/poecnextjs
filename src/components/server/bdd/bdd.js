@@ -2,34 +2,23 @@ import mariadb from 'mariadb';
 
 //Class to connect to the database
 export default class Bdd {
-
-  DB_HOST;
-  DB_USER;
-  DB_PASSWORD;
-  DB_NAME;
-  DB_PORT;
+  //conn;
+  pool;
   
 
   constructor() {
-    this.DB_HOST = process.env.DB_HOST;
-    this.DB_USER = process.env.DB_USER;
-    this.DB_PASSWORD = process.env.DB_PASSWORD;
-    this.DB_NAME = process.env.DB_NAME;
-    this.DB_PORT = process.env.DB_PORT;
+
+    this.pool = mariadb.createPool({
+      host: process.env.DB_HOST,
+      user: process.env.DB_USER,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_NAME,
+      port: process.env.DB_PORT,
+      connectionLimit: 5
+    })
   }
 
-  //Function to connect to the database
-
-  async connect() {
-    const pool = mariadb.createPool({
-      host: this.DB_HOST,
-      user: this.DB_USER,
-      password: this.DB_PASSWORD,
-      database: this.DB_NAME,
-      port: this.DB_PORT,
-      connectionLimit: 5
-    });
-
-    return pool;
+  get pool() {
+    return this.pool;
   }
 }
