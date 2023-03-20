@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
 import Connexion from "@/components/connexion";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 const myFont = localFont({ src: "../../public/PermanentMarker-Regular.ttf" });
 
@@ -29,6 +29,23 @@ export default function Header() {
     }
   };
 
+  const [username, setUsername] = useState("");
+
+  useEffect(() => {
+    var match = document.cookie.match(
+      new RegExp("(^| )" + "username" + "=([^;]+)")
+    );
+    if (match) setUsername(match[2]);
+  }, []);
+
+  function deconnexion() {
+    document.cookie =
+      "username=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    document.cookie =
+      "access_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    reload();
+  }
+
   return (
     <>
       <div>
@@ -43,11 +60,19 @@ export default function Header() {
               <li>
                 <Link href="/statistiques">Statistiques</Link>
               </li>
-              <li>
-                <span>
-                  <FontAwesomeIcon icon={faUser} onClick={handleClick} />
-                </span>
-              </li>
+              {username == "" && (
+                <li>
+                  <span>
+                    <FontAwesomeIcon icon={faUser} onClick={handleClick} />
+                  </span>
+                </li>
+              )}
+              {username !== "" && (
+                <div className={styles.container_sous_menu}>
+                  <p className={styles.username}>{username.toUpperCase()}</p>
+                  <p onClick={deconnexion}>Déconnexion</p>
+                </div>
+              )}
             </ul>
           </div>
         </div>
