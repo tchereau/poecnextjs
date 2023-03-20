@@ -27,6 +27,10 @@ export default async function handler(
   const verif = new Verif();
   const result = await verif.verifyToken(token);
 
+  if(!!result.error){
+    return res.status(result.code).json(<any>{error: result.error})
+  }
+
   if(!result){
     return res.status(401).json(<any>{error: "Wrong token"})
   }
@@ -40,7 +44,7 @@ export default async function handler(
   // get all clients
   const clientQuery = new ClientQuery();
   const clients = await clientQuery.getAllClients();
-  
+
   if(clients){
     return res.status(200).json(<any>{clients: clients})
   }else{
