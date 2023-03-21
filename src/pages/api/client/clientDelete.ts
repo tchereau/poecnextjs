@@ -1,8 +1,8 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
-import Verif from "../../components/server/auth/verif";
-import ClientQuery from "../../components/server/client/ClientQuery";
-import Client from "../../components/server/ERP/Client/Clients";
+import Verif from "../../../components/server/auth/verif";
+import ClientQuery from "../../../components/server/client/ClientQuery";
+import Client from "../../../components/server/ERP/Client/Clients";
 
 type Data = {
   name: string;
@@ -12,7 +12,8 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  if (req.method !== "POST") {
+  console.log('ici')
+  if (req.method !== "DELETE") {
     return res.status(400).json(<any>{ error: "Bad request" });
   }
   let token;
@@ -46,34 +47,15 @@ export default async function handler(
   } catch (error) {
     return res.status(500).json(<any>{ error: "Oups, something went wrong" });
   }
-  if (
-    !body.idClient ||
-    !body.Siret ||
-    !body.NomSociete ||
-    !body.Dirigeant ||
-    !body.NumVoie ||
-    !body.Voie ||
-    !body.CodePostal ||
-    !body.Ville ||
-    !body.Telephone
-  ) {
-    return res.status(400).json(<any>{ error: "Missing data" });
+  let id;
+  try {
+    id = body.id;
+  } catch (error) {
+    
   }
-
-  const client = new Client();
-  client.id = body.idClient;
-  client.Siret = body.Siret;
-  client.NomSociete = body.NomSociete;
-  client.Dirigeant = body.Dirigeant;
-  client.NumVoie = body.NumVoie;
-  client.NomVoie = body.Voie;
-  client.CodePostal = body.CodePostal;
-  client.Ville = body.Ville;
-  client.Telephone = body.Telephone;
-
   const clientQuery = new ClientQuery();
   try {
-    await clientQuery.updateClient(client);
+    await clientQuery.deleteClient(id);
   }catch(error){
     return res.status(500).json(<any>{ error: "Oups, something went wrong" });
   }

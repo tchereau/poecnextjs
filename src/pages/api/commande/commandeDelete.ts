@@ -1,7 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
-import Verif from "../../components/server/auth/verif";
-import CommandeQuery from "../../components/server/Commande/CommandeQuery";
+import Verif from "../../../components/server/auth/verif";
+import CommandeQuery from "../../../components/server/Commande/CommandeQuery";
 
 type Data = {
   name: string;
@@ -11,7 +11,8 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  if (req.method !== "POST") {
+  console.log('ici')
+  if (req.method !== "DELETE") {
     return res.status(400).json(<any>{ error: "Bad request" });
   }
   let token;
@@ -39,13 +40,24 @@ export default async function handler(
       return res.status(401).json(<any>{ error: result.error });
   }
 
-  // get all clients
-  const commandeQuery = new CommandeQuery();
-  const commandes = await commandeQuery.getAllCommandes();
-
-  if (commandes) {
-    return res.status(200).json(<any>{ commandes: commandes });
-  } else {
+  let body;
+  try {
+    body = req.body;
+  } catch (error) {
     return res.status(500).json(<any>{ error: "Oups, something went wrong" });
   }
+  let idCommande;
+  try {
+    idCommande = body.idCommande;
+  } catch (error) {
+    
+  }
+  const commandeQuery = new CommandeQuery();
+  try {
+    await commandeQuery.deleteCommande(idCommande);
+  }catch(error){
+    return res.status(500).json(<any>{ error: "Oups, something went wrong" });
+  }
+
+  return res.status(200).json(<any>{ result: "ok" });
 }

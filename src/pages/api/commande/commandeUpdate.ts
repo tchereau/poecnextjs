@@ -1,8 +1,8 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
-import Verif from "../../components/server/auth/verif";
-import CommandeQuery from "../../components/server/Commande/CommandeQuery";
-import Commande from "../../components/server/ERP/Commande/Commandes";
+import Verif from "../../../components/server/auth/verif";
+import CommandeQuery from "../../../components/server/Commande/CommandeQuery";
+import Commande from "../../../components/server/ERP/Commandes/Commandes";
 
 type Data = {
   name: string;
@@ -46,32 +46,36 @@ export default async function handler(
   } catch (error) {
     return res.status(500).json(<any>{ error: "Oups, something went wrong" });
   }
-  console.log(body)
   if (
-    !body.NumeroCommandes ||
-    !body.Client ||
-    !body.Date
+    !body.idClient ||
+    !body.Siret ||
+    !body.NomSociete ||
+    !body.Dirigeant ||
+    !body.NumVoie ||
+    !body.Voie ||
+    !body.CodePostal ||
+    !body.Ville ||
+    !body.Telephone
   ) {
     return res.status(400).json(<any>{ error: "Missing data" });
   }
 
-  const commande = new Commande();
-  commande.idCommande = 0;
-  commande.NumeroCommandes = body.NumeroCommandes;
-  commande.Client = body.Client;
-  commande.Date = body.Date;
+  const client = new Client();
+  client.id = body.idClient;
+  client.Siret = body.Siret;
+  client.NomSociete = body.NomSociete;
+  client.Dirigeant = body.Dirigeant;
+  client.NumVoie = body.NumVoie;
+  client.NomVoie = body.Voie;
+  client.CodePostal = body.CodePostal;
+  client.Ville = body.Ville;
+  client.Telephone = body.Telephone;
 
-  const commandeQuery = new CommandeQuery();
-  const resultCommande = await commandeQuery.addCommande(commande);
-
-  if (!!resultCommande.error) {
-    return res
-      .status(resultCommande.code)
-      .json(<any>{ error: resultCommande.error });
-  }
-
-  if (!resultCommande) {
-    return res.status(500).json(<any>{ error: "error" });
+  const clientQuery = new ClientQuery();
+  try {
+    await clientQuery.updateClient(client);
+  }catch(error){
+    return res.status(500).json(<any>{ error: "Oups, something went wrong" });
   }
 
   return res.status(200).json(<any>{ result: "ok" });
