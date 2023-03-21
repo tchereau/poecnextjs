@@ -1,4 +1,4 @@
-import Commande from "../ERP/Commande/Commandes";
+import Commande from "../ERP/commandes/commandes";
 import Bdd from "../bdd/bdd";
 
 export default class CommandeQuery {

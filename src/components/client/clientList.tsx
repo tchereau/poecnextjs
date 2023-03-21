@@ -11,6 +11,7 @@ interface ClientProps {
 }
 
 interface Client {
+  idClient: number;
   Siret: string;
   NomSociete: string;
   Dirigeant: string;
@@ -31,8 +32,9 @@ export default function clientList({
   const [clients, setClients] = useState<Client[]>([]);
   var [currentClient, setCurrentClient] = useState<Client[]>([]);
   const [cookies, setCookie] = useCookies();
+
   function deleteClient(client: any) {
-    fetch("/api/clientDelete", {
+    fetch("/api/client/suppression", {
       method: "DELETE",
       headers: {
         Accept: "application/json",
@@ -43,11 +45,13 @@ export default function clientList({
         id: client.idClient,
       }),
     });
+    setClients(clients.filter((c) => c.idClient !== client.idClient));
   }
+
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await fetch("/api/clients", {
+        const response = await fetch("/api/client/clients", {
           method: "POST",
           headers: {
             Accept: "application/json",

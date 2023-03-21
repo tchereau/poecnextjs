@@ -38,7 +38,7 @@ export default function commandeAdd({
     };
     async function postClient() {
       try {
-        const response = await fetch("/api/commandeAdd", {
+        const response = await fetch("/api/commande/ajout", {
           method: "POST",
           headers: {
             Accept: "application/json",
@@ -78,7 +78,7 @@ export default function commandeAdd({
             />
           </span>
         )}
-        <h2>{useClient ? "Modifier un client" : "Ajouter une commande"}</h2>
+        <h2>{useClient ? "Modifier une commande" : "Ajouter une commande"}</h2>
         <form className={client_add_style.form} onSubmit={validateForm}>
           <label className={client_add_style.label}>
             Client (idClient)
