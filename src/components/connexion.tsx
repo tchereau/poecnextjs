@@ -1,6 +1,7 @@
 import styles from "@/styles/Connexion.module.css";
 import React, { useState } from "react";
 import Link from "next/link";
+import { useCookies } from "react-cookie";
 
 interface ModalProps {
   isOpen: boolean;
@@ -8,6 +9,7 @@ interface ModalProps {
 }
 
 export default function Connexion({ isOpen, onClose }: ModalProps) {
+  const [cookies, setCookie] = useCookies();
   async function login(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
@@ -29,8 +31,8 @@ export default function Connexion({ isOpen, onClose }: ModalProps) {
     if (content.error) {
       alert("Erreur de connexion");
     } else if (content.result) {
-      document.cookie = `access_token=${content.result}`;
-      document.cookie = `username=${username}`;
+      setCookie("token", content.result, { path: "/" });
+      setCookie("username", username, { path: "/" });
       window.location.reload();
       onClose();
     }

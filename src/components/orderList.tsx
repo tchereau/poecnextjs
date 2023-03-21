@@ -1,19 +1,44 @@
-import { useEffect, useState } from "react";
+import client_list_styles from "@/styles/Array.module.css";
+import { useEffect, useRef, useState } from "react";
 
-interface Client {
-  idClient: number;
-  Siret: string;
-  NomSociete: string;
-  Dirigeant: string;
-  NumVoie: number;
-  Voie: string;
-  CodePostal: number;
-  Ville: string;
-  Telephone: number;
+interface ClientProps {
+  openEdit: () => void;
+  closeList: () => void;
+  getClient: (client: any) => void;
+  openClientView: () => void;
+  closeView: () => void;
 }
 
-export default function ProductAdd() {
-  const [clients, setClients] = useState<Client[]>([]);
+interface Commande {
+  NumeroCommandes: number;
+  Client: number;
+  Date: Date;
+}
+
+function deleteClient(client: any) {
+  console.log(client.idClient);
+  fetch("/api/clients", {
+    method: "DELETE",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      authorization: document.cookie.split("=")[1].split(" ")[0].slice(0, -1),
+    },
+    body: JSON.stringify({
+      idClient: client.idClient,
+    }),
+  });
+}
+
+export default function clientList({
+  openEdit,
+  getClient,
+  closeList,
+  openClientView,
+  closeView,
+}: ClientProps) {
+  const [clients, setClients] = useState<Commande[]>([]);
+  var [currentClient, setCurrentClient] = useState<Commande[]>([]);
 
   useEffect(() => {
     async function fetchData() {
@@ -46,20 +71,119 @@ export default function ProductAdd() {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    setCurrentClient(clients);
+  }, [clients]);
+
+  const thead = () => {
+    var key = [];
+    for (var keys in clients[0]) {
+      key.push(keys);
+    }
+    return key;
+  };
+  const search = useRef<HTMLInputElement>(null);
+  const [query, setQuery] = useState<any>();
+
+  useEffect(() => {
+    document.addEventListener("keyup", () => {
+      setQuery(search.current?.value);
+    });
+  }, []);
+
+  useEffect(() => {
+    setCurrentClient(clients);
+    setCurrentClient((prevClientTab) =>
+      prevClientTab.filter((commande) => {
+        if (query != undefined)
+          return (
+            commande["NumeroCommandes"]
+              .toString()
+              .toLowerCase()
+              .includes(query.toLowerCase()) ||
+            commande["NumeroCommandes"]
+              .toString()
+              .toLowerCase()
+              .includes(query.toLowerCase()) ||
+            commande["Date"]
+              .toString()
+              .toLowerCase()
+              .includes(query.toLowerCase())
+          );
+      })
+    );
+  }, [query]);
+
   return (
-    <div>
-      <h2>Liste des commandes</h2>
-      <div>
-        <table>
-          <tbody>
-            {clients.map((client) => (
-              <tr key={client.idClient}>
-                <td>{client.NomSociete}</td>
-                <td>{client.Ville}</td>
-                <td>{client.Telephone}</td>
-                <td>{client.Voie}</td>
-              </tr>
-            ))}
+    <div className={client_list_styles.center}>
+      <h2>Liste des Commandes</h2>
+      <input
+        id={client_list_styles.search}
+        type="text"
+        placeholder="search..."
+        ref={search}
+      ></input>
+      <div className={client_list_styles.table_container}>
+        <table className={client_list_styles.table}>
+          <thead>
+            <tr>
+              {thead().map((value: string, index: number) => {
+                return (
+                  <th key={index} className={client_list_styles.th}>
+                    {value}
+                  </th>
+                );
+              })}
+            </tr>
+          </thead>
+          <tbody className={client_list_styles.tbody}>
+            {currentClient.map((value, index) => {
+              return (
+                <tr
+                  key={index}
+                  className={client_list_styles.tr}
+                  onClick={() => {
+                    openClientView();
+                    getClient(value);
+                    closeList();
+                  }}
+                >
+                  <td className={client_list_styles.td}>
+                    {value["NumeroCommandes"]}
+                  </td>
+                  <td className={client_list_styles.td}>
+                    {value["Date"].toDateString()}
+                  </td>
+                  <td className={client_list_styles.td}>{value["Client"]}</td>
+
+                  <td>
+                    <button
+                      className={client_list_styles.button}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        deleteClient(value);
+                      }}
+                    >
+                      Supprimer
+                    </button>
+                  </td>
+                  <td>
+                    <button
+                      className={client_list_styles.button}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        getClient(value);
+                        openEdit();
+                        closeList();
+                        closeView();
+                      }}
+                    >
+                      Modifier
+                    </button>
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>

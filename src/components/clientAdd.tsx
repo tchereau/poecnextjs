@@ -1,59 +1,13 @@
 import client_add_style from "@/styles/ClientAdd.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleArrowLeft } from "@fortawesome/free-solid-svg-icons";
-
-function validateForm(e: React.FormEvent<HTMLFormElement>) {
-  e.preventDefault();
-  const formData = new FormData(e.currentTarget);
-  const id = Number(formData.get("idClient"));
-  const Siret = formData.get("Siret");
-  const NomSociete = formData.get("entreprise");
-  const NumVoie = Number(formData.get("numeroVoie"));
-  const NomVoie = formData.get("rue");
-  const CodePostal = Number(formData.get("codePostal"));
-  const Ville = formData.get("ville");
-  const Dirigeant = formData.get("dirigeant");
-  const Telephone = Number(formData.get("numeroTelephone"));
-
-  const clientF = {
-    idClient: id,
-    Siret: Siret,
-    NomSociete: NomSociete,
-    NumVoie: NumVoie,
-    Voie: NomVoie,
-    CodePostal: CodePostal,
-    Ville: Ville,
-    Dirigeant: Dirigeant,
-    Telephone: Telephone,
-  };
-  async function postClient() {
-    try {
-      const response = await fetch("/api/clientAdd", {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          authorization: document.cookie
-            .split("=")[1]
-            .split(" ")[0]
-            .slice(0, -1),
-        },
-        body: JSON.stringify(clientF),
-      });
-
-      if (!response.ok) {
-        throw new Error(
-          "Une erreur s'est produite lors de l'insertion des données."
-        );
-      }
-
-      const data = await response.json();
-    } catch (error) {
-      console.error(error);
-    }
-  }
-  postClient();
+import { useCookies } from "react-cookie";
+interface ClientProps {
+  useClient?: any;
+  closeEdit: () => void;
+  openList: () => void;
 }
+var client: any;
 
 function objectToArray(object: any) {
   var monTableau = Object.keys(object).map(function (cle) {
@@ -62,19 +16,61 @@ function objectToArray(object: any) {
   return monTableau;
 }
 
-var client: any;
-
-interface ClientProps {
-  useClient?: any;
-  closeEdit: () => void;
-  openList: () => void;
-}
-
 export default function clientAdd({
   useClient,
   closeEdit,
   openList,
 }: ClientProps) {
+  const [cookies, setCookie] = useCookies();
+  function validateForm(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const Siret = formData.get("Siret");
+    const NomSociete = formData.get("entreprise");
+    const NumVoie = Number(formData.get("numeroVoie"));
+    const NomVoie = formData.get("rue");
+    const CodePostal = Number(formData.get("codePostal"));
+    const Ville = formData.get("ville");
+    const Dirigeant = formData.get("dirigeant");
+    const Telephone = Number(formData.get("numeroTelephone"));
+
+    const clientF = {
+      idClient: useClient ? Number(useClient.idClient) : "",
+      Siret: Siret,
+      NomSociete: NomSociete,
+      NumVoie: NumVoie,
+      Voie: NomVoie,
+      CodePostal: CodePostal,
+      Ville: Ville,
+      Dirigeant: Dirigeant,
+      Telephone: Telephone,
+    };
+    async function postClient() {
+      const url = () => (useClient ? "/api/clientUpdate" : "/api/clientAdd");
+      try {
+        const response = await fetch(url(), {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            authorization: cookies.token,
+          },
+          body: JSON.stringify(clientF),
+        });
+
+        if (!response.ok) {
+          throw new Error(
+            "Une erreur s'est produite lors de l'insertion des données."
+          );
+        }
+
+        const data = await response.json();
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    postClient();
+  }
   if (useClient) {
     client = objectToArray(useClient);
   }
@@ -94,15 +90,6 @@ export default function clientAdd({
         )}
         <h2>{useClient ? "Modifier un client" : "Ajouter un client"}</h2>
         <form className={client_add_style.form} onSubmit={validateForm}>
-          <label className={client_add_style.label}>
-            idClient
-            <input
-              type="text"
-              name="idClient"
-              placeholder="idClient"
-              defaultValue={useClient ? client[0] : ""}
-            />
-          </label>
           <label className={client_add_style.label}>
             Siret
             <input

@@ -1,6 +1,6 @@
 import client_list_styles from "@/styles/Array.module.css";
-import client from "../../public/clients.json";
 import { useEffect, useRef, useState } from "react";
+import { useCookies } from "react-cookie";
 
 interface ClientProps {
   openEdit: () => void;
@@ -11,7 +11,6 @@ interface ClientProps {
 }
 
 interface Client {
-  idClient: number;
   Siret: string;
   NomSociete: string;
   Dirigeant: string;
@@ -20,21 +19,6 @@ interface Client {
   CodePostal: number;
   Ville: string;
   Telephone: number;
-}
-
-function deleteClient(client: any) {
-  console.log(client.idClient);
-  fetch("/api/clients", {
-    method: "DELETE",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-      authorization: document.cookie.split("=")[1].split(" ")[0].slice(0, -1),
-    },
-    body: JSON.stringify({
-      idClient: client.idClient,
-    }),
-  });
 }
 
 export default function clientList({
@@ -46,7 +30,21 @@ export default function clientList({
 }: ClientProps) {
   const [clients, setClients] = useState<Client[]>([]);
   var [currentClient, setCurrentClient] = useState<Client[]>([]);
-
+  const [cookies, setCookie] = useCookies();
+  function deleteClient(client: any) {
+    console.log(client.idClient);
+    fetch("/api/clients", {
+      method: "DELETE",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        authorization: cookies.token,
+      },
+      body: JSON.stringify({
+        id: client.idClient,
+      }),
+    });
+  }
   useEffect(() => {
     async function fetchData() {
       try {
@@ -55,10 +53,7 @@ export default function clientList({
           headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
-            authorization: document.cookie
-              .split("=")[1]
-              .split(" ")[0]
-              .slice(0, -1),
+            authorization: cookies.token,
           },
         });
 
@@ -126,13 +121,15 @@ export default function clientList({
         <table className={client_list_styles.table}>
           <thead>
             <tr>
-              {thead().map((value: string, index: number) => {
-                return (
-                  <th key={index} className={client_list_styles.th}>
-                    {value}
-                  </th>
-                );
-              })}
+              {thead()
+                .splice(1, 10)
+                .map((value: string, index: number) => {
+                  return (
+                    <th key={index} className={client_list_styles.th}>
+                      {value}
+                    </th>
+                  );
+                })}
             </tr>
           </thead>
           <tbody className={client_list_styles.tbody}>
@@ -147,7 +144,6 @@ export default function clientList({
                     closeList();
                   }}
                 >
-                  <td className={client_list_styles.td}>{value["idClient"]}</td>
                   <td className={client_list_styles.td}>{value["Siret"]}</td>
                   <td className={client_list_styles.td}>
                     {value["NomSociete"]}
