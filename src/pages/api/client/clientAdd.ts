@@ -1,8 +1,8 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
-import Verif from "../../components/server/auth/verif";
-import ClientQuery from "../../components/server/client/ClientQuery";
-import Client from "../../components/server/ERP/Client/Clients";
+import Verif from "../../../components/server/auth/verif";
+import ClientQuery from "../../../components/server/client/ClientQuery";
+import Client from "../../../components/server/ERP/Client/Clients";
 
 type Data = {
   name: string;
