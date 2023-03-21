@@ -26,24 +26,24 @@ export default function clientList({
   const [cookies, setCookie] = useCookies();
   const [commandes, setCommandes] = useState<Commande[]>([]);
   var [currentCommandes, setCurrentCommandes] = useState<Commande[]>([]);
+  function deleteCommande(idCommande: any) {
+    fetch("/api/deleteOrder", {
+      method: "DELETE",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        authorization: cookies.token,
+      },
+      body: JSON.stringify({
+        id: idCommande,
+      }),
+    });
+  }
 
   useEffect(() => {
-    function deleteCommande(idCommande: any) {
-      fetch("/api/deleteOrder", {
-        method: "DELETE",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          authorization: cookies.token,
-        },
-        body: JSON.stringify({
-          id: idCommande,
-        }),
-      });
-    }
     async function fetchData() {
       try {
-        const response = await fetch("/api/clients", {
+        const response = await fetch("/api/commandes", {
           method: "POST",
           headers: {
             Accept: "application/json",
@@ -74,7 +74,7 @@ export default function clientList({
 
   const thead = () => {
     var key = [];
-    for (var keys in clients[0]) {
+    for (var keys in commandes[0]) {
       key.push(keys);
     }
     return key;
@@ -89,9 +89,9 @@ export default function clientList({
   }, []);
 
   useEffect(() => {
-    setCurrentClient(clients);
-    setCurrentClient((prevClientTab) =>
-      prevClientTab.filter((commande) => {
+    setCurrentCommandes(commandes);
+    setCurrentCommandes((prevCommandeTab) =>
+      prevCommandeTab.filter((commande) => {
         if (query != undefined)
           return (
             commande["NumeroCommandes"]
@@ -134,7 +134,7 @@ export default function clientList({
             </tr>
           </thead>
           <tbody className={client_list_styles.tbody}>
-            {currentClient.map((value, index) => {
+            {currentCommandes.map((value, index) => {
               return (
                 <tr
                   key={index}
@@ -158,7 +158,7 @@ export default function clientList({
                       className={client_list_styles.button}
                       onClick={(e) => {
                         e.stopPropagation();
-                        deleteClient(value);
+                        deleteCommande(value["NumeroCommandes"]);
                       }}
                     >
                       Supprimer
