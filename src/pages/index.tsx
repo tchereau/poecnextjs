@@ -1,17 +1,17 @@
 import Head from "next/head";
 import { Inter } from "next/font/google";
 import styles from "@/styles/Home.module.css";
-import Header from "@/components/header";
+import Header from "@/components/clientheader";
 import home_style from "@/styles/Home.module.css";
-import Sidebar from "@/components/sidebar";
-import ClientList from "@/components/clientList";
-import ClientAdd from "@/components/clientAdd";
+import Sidebar from "@/components/clientsidebar";
+import ClientList from "@/components/clientclientList";
+import ClientAdd from "@/components/clientclientAdd";
 import { useState } from "react";
-import ClientView from "@/components/clientView";
-import ProductList from "@/components/productList";
-import ProductAdd from "@/components/productAdd";
-import OrderList from "@/components/orderList";
-import OrderAdd from "@/components/orderAdd";
+import ClientView from "@/components/clientclientView";
+import ProductList from "@/components/clientproductList";
+import ProductAdd from "@/components/clientproductAdd";
+import OrderList from "@/components/clientorderList";
+import OrderAdd from "@/components/clientorderAdd";
 import Image from "next/image";
 
 const inter = Inter({ subsets: ["latin"] });
