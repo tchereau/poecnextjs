@@ -1,7 +1,7 @@
 import Commande from "../ERP/Commande/Commandes";
 import Bdd from "../bdd/bdd";
 
-export default class ClientQuery {
+export default class CommandeQuery {
   //Get all clients
   async getAllCommandes() {
     let conn;
