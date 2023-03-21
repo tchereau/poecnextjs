@@ -18,7 +18,7 @@ interface OrderProps {
   openList: () => void;
 }
 
-export default function orderAdd({
+export default function commandeAdd({
   useClient,
   closeEdit,
   openList,
@@ -29,7 +29,7 @@ export default function orderAdd({
     const formData = new FormData(e.currentTarget);
     const Client = Number(formData.get("idClient"));
     const Date = formData.get("Date");
-    const NumeroCommandes = formData.get("NumeroCommande");
+    const NumeroCommandes = formData.get("NumeroCommandes");
 
     const commande = {
       NumeroCommandes: NumeroCommandes,
@@ -38,7 +38,7 @@ export default function orderAdd({
     };
     async function postClient() {
       try {
-        const response = await fetch("/api/orderAdd", {
+        const response = await fetch("/api/commandeAdd", {
           method: "POST",
           headers: {
             Accept: "application/json",
@@ -84,7 +84,7 @@ export default function orderAdd({
             Client (idClient)
             <input
               type="text"
-              name="Client"
+              name="idClient"
               placeholder="idClient"
               defaultValue={useClient ? client[0] : ""}
             />
@@ -94,7 +94,7 @@ export default function orderAdd({
             <input
               type="date"
               name="Date"
-              placeholder="Siret"
+              placeholder="Date"
               defaultValue={useClient ? client[1] : ""}
             />
           </label>
