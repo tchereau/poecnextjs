@@ -1,7 +1,7 @@
 import styles from "@/styles/Connexion.module.css";
 import React, { useState } from "react";
 import Link from "next/link";
-import useSWR from "swr";
+
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -30,6 +30,8 @@ export default function Connexion({ isOpen, onClose }: ModalProps) {
       alert("Erreur de connexion");
     } else if (content.result) {
       document.cookie = `access_token=${content.result}`;
+      document.cookie = `username=${username}`;
+      window.location.reload();
       onClose();
     }
   }
