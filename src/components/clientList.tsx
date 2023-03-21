@@ -23,7 +23,18 @@ interface Client {
 }
 
 function deleteClient(client: any) {
-  console.log(client);
+  console.log(client.idClient);
+  fetch("/api/clients", {
+    method: "DELETE",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      authorization: document.cookie.split("=")[1].split(" ")[0].slice(0, -1),
+    },
+    body: JSON.stringify({
+      idClient: client.idClient,
+    }),
+  });
 }
 
 export default function clientList({
