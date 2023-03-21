@@ -12,6 +12,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
+  console.log('ici')
   if (req.method !== "DELETE") {
     return res.status(400).json(<any>{ error: "Bad request" });
   }
@@ -47,20 +48,14 @@ export default async function handler(
     return res.status(500).json(<any>{ error: "Oups, something went wrong" });
   }
 
-  let id = body.id;
-
+  //let id = body.id;
+ let id = 9;
   const clientQuery = new ClientQuery();
-  const resultClient = await clientQuery.deleteClient(id);
-
-  if (!!resultClient.error) {
-    return res
-      .status(resultClient.code)
-      .json(<any>{ error: resultClient.error });
+  try {
+    await clientQuery.deleteClient(id);
+  }catch(error){
+    return res.status(500).json(<any>{ error: "Oups, something went wrong" });
   }
 
-  if (!resultClient) {
-    return res.status(401).json(<any>{ error: "Wrong token" });
-  }
-
-  return res.status(200).json(<any>{ name: "John Doe" });
+  return res.status(200).json(<any>{ result: "ok" });
 }
