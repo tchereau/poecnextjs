@@ -5,14 +5,13 @@ import { faUser } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
 import Connexion from "@/components/client/connexion";
 import React, { useState, useEffect } from "react";
+import { useCookies } from "react-cookie";
 
-const myFont = localFont({
-  src: "../../../public/PermanentMarker-Regular.ttf",
-});
+const myFont = localFont({ src: "../../public/PermanentMarker-Regular.ttf" });
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
-
+  const [cookies, setCookie] = useCookies();
   const handleClick = () => {
     setIsOpen(true);
   };
@@ -34,10 +33,8 @@ export default function Header() {
   const [username, setUsername] = useState("");
 
   useEffect(() => {
-    var match = document.cookie.match(
-      new RegExp("(^| )" + "username" + "=([^;]+)")
-    );
-    if (match) setUsername(match[2]);
+    var match = cookies.username;
+    if (match) setUsername(match);
   }, []);
 
   function deconnexion() {
