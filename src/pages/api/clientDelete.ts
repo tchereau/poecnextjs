@@ -47,9 +47,12 @@ export default async function handler(
   } catch (error) {
     return res.status(500).json(<any>{ error: "Oups, something went wrong" });
   }
-
-  //let id = body.id;
- let id = 9;
+  let id;
+  try {
+    id = body.id;
+  } catch (error) {
+    
+  }
   const clientQuery = new ClientQuery();
   try {
     await clientQuery.deleteClient(id);

@@ -46,8 +46,8 @@ export default async function handler(
   } catch (error) {
     return res.status(500).json(<any>{ error: "Oups, something went wrong" });
   }
-  console.log(body)
   if (
+    !body.idClient ||
     !body.Siret ||
     !body.NomSociete ||
     !body.Dirigeant ||
@@ -61,7 +61,7 @@ export default async function handler(
   }
 
   const client = new Client();
-  client.id = 0;
+  client.id = body.idClient;
   client.Siret = body.Siret;
   client.NomSociete = body.NomSociete;
   client.Dirigeant = body.Dirigeant;
@@ -72,16 +72,10 @@ export default async function handler(
   client.Telephone = body.Telephone;
 
   const clientQuery = new ClientQuery();
-  const resultClient = await clientQuery.addClient(client);
-
-  if (!!resultClient.error) {
-    return res
-      .status(resultClient.code)
-      .json(<any>{ error: resultClient.error });
-  }
-
-  if (!resultClient) {
-    return res.status(500).json(<any>{ error: "error" });
+  try {
+    await clientQuery.updateClient(client);
+  }catch(error){
+    return res.status(500).json(<any>{ error: "Oups, something went wrong" });
   }
 
   return res.status(200).json(<any>{ result: "ok" });
