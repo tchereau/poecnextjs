@@ -32,7 +32,6 @@ export default function clientList({
   var [currentClient, setCurrentClient] = useState<Client[]>([]);
   const [cookies, setCookie] = useCookies();
   function deleteClient(client: any) {
-    console.log(client.idClient);
     fetch("/api/clientDelete", {
       method: "DELETE",
       headers: {
