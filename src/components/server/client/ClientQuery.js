@@ -99,10 +99,11 @@ export default class ClientQuery {
   //Delete a client
 
  async deleteClient(id) {
+    const bdd = new Bdd();
     let conn;
     try {
-      conn = await Bdd.pool.getConnection();
-      const result = await conn.query("DELETE FROM clients WHERE id = ?", [id]);
+      conn = await bdd.pool.getConnection();
+      const result = await conn.query("DELETE FROM clients WHERE idClient = ?", [id]);
       return result;
     } catch (err) {
       throw err;
