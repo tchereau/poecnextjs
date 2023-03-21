@@ -1,5 +1,5 @@
 import client_list_styles from "@/styles/Array.module.css";
-import client from "../../public/clients.json";
+
 import { useEffect, useRef, useState } from "react";
 
 interface ClientProps {

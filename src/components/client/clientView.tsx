@@ -1,4 +1,4 @@
-import client_view_styles from "../styles/ClientView.module.css";
+import client_view_styles from "../../styles/ClientView.module.css";
 
 interface ClientProps {
   useClient: any;
