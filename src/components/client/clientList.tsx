@@ -33,7 +33,7 @@ export default function clientList({
   const [cookies, setCookie] = useCookies();
   function deleteClient(client: any) {
     console.log(client.idClient);
-    fetch("/api/clients", {
+    fetch("/api/clientDelete", {
       method: "DELETE",
       headers: {
         Accept: "application/json",
