@@ -11,9 +11,10 @@ interface OrderProps {
 }
 
 interface Commande {
+  idCommande: number;
   NumeroCommandes: number;
   Client: number;
-  Date: Date;
+  Date: string;
 }
 
 export default function clientList({
@@ -27,7 +28,7 @@ export default function clientList({
   const [commandes, setCommandes] = useState<Commande[]>([]);
   var [currentCommandes, setCurrentCommandes] = useState<Commande[]>([]);
   function deleteCommande(idCommande: any) {
-    fetch("/api/deleteOrder", {
+    fetch("/api/commandeDelete", {
       method: "DELETE",
       headers: {
         Accept: "application/json",
@@ -102,10 +103,7 @@ export default function clientList({
               .toString()
               .toLowerCase()
               .includes(query.toLowerCase()) ||
-            commande["Date"]
-              .toString()
-              .toLowerCase()
-              .includes(query.toLowerCase())
+            commande["Date"].includes(query.toLowerCase())
           );
       })
     );
@@ -146,19 +144,19 @@ export default function clientList({
                   }}
                 >
                   <td className={client_list_styles.td}>
-                    {value["NumeroCommandes"]}
+                    {value["idCommande"]}
                   </td>
                   <td className={client_list_styles.td}>
-                    {value["Date"].toDateString()}
+                    {value["NumeroCommandes"]}
                   </td>
                   <td className={client_list_styles.td}>{value["Client"]}</td>
-
+                  <td className={client_list_styles.td}>{value["Date"]}</td>
                   <td>
                     <button
                       className={client_list_styles.button}
                       onClick={(e) => {
                         e.stopPropagation();
-                        deleteCommande(value["NumeroCommandes"]);
+                        deleteCommande(value["idCommande"]);
                       }}
                     >
                       Supprimer
