@@ -43,7 +43,7 @@ export default function Connexion({ isOpen, onClose }: ModalProps) {
       {isOpen && (
         <div>
           <div className={styles.container}>
-            <h2 className={styles.titre}>Connexion / Inscription</h2>
+            <h2 className={styles.titre}>Connexion</h2>
             <form className={styles.form} onSubmit={login}>
               <input
                 className={styles.input}
@@ -57,9 +57,7 @@ export default function Connexion({ isOpen, onClose }: ModalProps) {
                 type="text"
                 placeholder="mot de passe"
               />
-              <Link href="/" className={styles.link}>
-                S'inscrire
-              </Link>
+
               <div className={styles.btncontainer}>
                 <button onClick={onClose} className={styles.bouton}>
                   Annuler

@@ -1,4 +1,4 @@
-import Header from "@/components/header";
+import Header from "@/components/client/header";
 import StackBarChart from "./stackBarChart";
 import LineChart from "./lineChart";
 import DoughnutChart from "./doughnutChart";
