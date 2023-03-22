@@ -28,7 +28,7 @@ export default function clientList({
   const [commandes, setCommandes] = useState<Commande[]>([]);
   var [currentCommandes, setCurrentCommandes] = useState<Commande[]>([]);
   function deleteCommande(idCommande: any) {
-    fetch("/api/commande/suppression", {
+    fetch("/api/commande/suppresion", {
       method: "DELETE",
       headers: {
         Accept: "application/json",
@@ -36,7 +36,7 @@ export default function clientList({
         authorization: cookies.token,
       },
       body: JSON.stringify({
-        id: idCommande,
+        idCommande: idCommande,
       }),
     });
   }

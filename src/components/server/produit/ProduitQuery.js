@@ -53,7 +53,7 @@ export default class ProduitQuery {
       return false;
     }
     const result = await conn.query(
-      "INSERT INTO produits (idCommande, CodeProduit, Libelle, Prix) VALUES (?, ?, ?, ?)",
+      "INSERT INTO produits (idProduit, CodeProduit, Libelle, Prix) VALUES (?, ?, ?, ?)",
       [
         produit.idProduit,
         produit.CodeProduit,
