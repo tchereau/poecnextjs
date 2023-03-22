@@ -39,41 +39,14 @@ export default async function handler(
     case 500:
       return res.status(401).json(<any>{ error: result.error });
   }
+  
+  const produitQuery = new ProduitQuery();
+  const produits = await produitQuery.getAllProduit();
 
-  let body;
-  try {
-    body = req.body;
-  } catch (error) {
+  if (produits) {
+    return res.status(200).json(<any>{ produits: produits });
+  } else {
     return res.status(500).json(<any>{ error: "Oups, something went wrong" });
   }
-  console.log(body)
-  if (
-    !body.idProduit ||
-    !body.CodeProduit ||
-    !body.Libelle ||
-    !body.Prix
-  ) {
-    return res.status(400).json(<any>{ error: "Missing data" });
-  }
 
-  const produit = new Produit();
-  produit.idProduit = 0;
-  produit.CodeProduit = body.CodeProduit;
-  produit.Libelle = body.Libelle;
-  produit.Prix = body.Prix;
-
-  const produitQuery = new ProduitQuery();
-  const produitADD = await produitQuery.addProduit(produit);
-
-  if (!!produitADD.error) {
-    return res
-      .status(produitADD.code)
-      .json(<any>{ error: produitADD.error });
-  }
-
-  if (!produitADD) {
-    return res.status(500).json(<any>{ error: "error" });
-  }
-
-  return res.status(200).json(<any>{ result: "ok" });
 }
