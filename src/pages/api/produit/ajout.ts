@@ -1,8 +1,8 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
 import Verif from "../../../components/server/auth/verif";
-import CommandeQuery from "../../../components/server/Commande/CommandeQuery";
-import Commande from "../../../components/server/ERP/Commandes/Commandes";
+import ProduitQuery from "../../../components/server/produit/ProduitQuery";
+import Produit from "../../../components/server/ERP/Produits/Produits";
 
 type Data = {
   name: string;
@@ -55,22 +55,22 @@ export default async function handler(
     return res.status(400).json(<any>{ error: "Missing data" });
   }
 
-  const commande = new Commande();
-  commande.idCommande = 0;
-  commande.NumeroCommandes = body.NumeroCommandes;
-  commande.Client = body.Client;
-  commande.Date = body.Date;
+  const produit = new Produit();
+  produit.idProduit = 0
+  produit.CodeProduit = body.CodeProduit
+  produit.Libelle = body.Libelle
+  produit.Prix = body.Prix
 
-  const commandeQuery = new CommandeQuery();
-  const resultCommande = await commandeQuery.addCommande(commande);
+  const produitQuery = new ProduitQuery();
+  const resultProduit = await produitQuery.addProduit(produit);
 
-  if (!!resultCommande.error) {
+  if (!!resultProduit.error) {
     return res
-      .status(resultCommande.code)
-      .json(<any>{ error: resultCommande.error });
+      .status(resultProduit.code)
+      .json(<any>{ error: resultProduit.error });
   }
 
-  if (!resultCommande) {
+  if (!resultProduit) {
     return res.status(500).json(<any>{ error: "error" });
   }
 
