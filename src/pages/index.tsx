@@ -153,16 +153,9 @@ export default function Home() {
           <div>
             <h2>Bienvenue sur HSTAR, le CRM qu'on M</h2>
 
-            <div>
-              <Image
-                src="/vignetteClientList.png"
-                alt="Picture of the author"
-                unoptimized={true}
-                height={250}
-                width={400}
-                className={home_style.vignette}
-              />
-            </div>
+            <p onClick={handleListClick} className={home_style.vignette}>
+              Liste des clients
+            </p>
           </div>
         )}
     </>
