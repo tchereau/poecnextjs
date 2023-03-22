@@ -1,46 +1,46 @@
 export default class Produits {
 
-  idCommande;
-  NumeroCommandes;
-  Client;
-  Date;
+  idProduit;
+  CodeProduit;
+  Libelle;
+  Prix;
 
-  constructor(id, NumeroCommandes, Client, NumVoie, Date) {
-    this.idCommande = id;
-    this.NumeroCommandes = NumeroCommandes;
-    this.Client = Client;
-    this.Date = Date;
+  constructor(idProduit, CodeProduit, Libelle, Prix) {
+    this.idProduit = idProduit;
+    this.CodeProduit = CodeProduit;
+    this.Libelle = Libelle;
+    this.Prix = Prix;
   }
 
-  get idCommande() {
-    return this.idCommande;
+  get idProduit() {
+    return this.idProduit;
   }
 
-  set idCommande(idCommande) {
-    this.idCommande = idCommande;
+  set idProduit(idProduit) {
+    this.idProduit = idProduit;
   }
 
-  get NumeroCommandes() {
-    return this.NumeroCommandes;
+  get CodeProduit() {
+    return this.CodeProduit;
   }
 
-  set NumeroCommandes(NumeroCommandes) {
-    this.NumeroCommandes = NumeroCommandes;
+  set CodeProduit(CodeProduit) {
+    this.CodeProduit = CodeProduit;
   }
 
-  get Client() {
-    return this.Client;
+  get Libelle() {
+    return this.Libelle;
   }
 
-  set Client(Client) {
-    this.Client = Client;
+  set Libelle(Libelle) {
+    this.Libelle = Libelle;
   }
 
-  get Date() {
-    return this.Date;
+  get Prix() {
+    return this.Prix;
   }
 
-  set Date(Date) {
-    this.Date = Date;
+  set Prix(Prix) {
+    this.Prix = Prix;
   }
 }
