@@ -152,10 +152,6 @@ export default function Home() {
         !orderAddIsOpen && (
           <div>
             <h2>Bienvenue sur HSTAR, le CRM qu'on M</h2>
-
-            <p onClick={handleListClick} className={home_style.vignette}>
-              Liste des clients
-            </p>
           </div>
         )}
     </>

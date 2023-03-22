@@ -151,12 +151,13 @@ export default function clientList({
     setIdCommande(idCommande);
   }
 
-  function addProductToOrder() {
-    const data = new FormData();
+  function addProductToOrder(e: any) {
+    e.preventDefault();
+    const data = new FormData(e.currentTarget);
     const idCommande = data.get("idCommande");
-    const idProduit = data.get("idProduit");
+    const idProduit = data.get("libelleProduct");
     const quantite = data.get("quantite");
-    /*fetch("/api/commande/ajoutProduit", {
+    /* fetch("/api/commande/ajoutProduit", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -201,6 +202,7 @@ export default function clientList({
                   key={index}
                   className={client_list_styles.tr}
                   onClick={(e) => {
+                    e.preventDefault();
                     openProductView(value.idCommande);
                   }}
                 >
@@ -247,22 +249,23 @@ export default function clientList({
         <div className={client_list_styles.product_container}>
           <h3>Commande n°{idCommande}</h3>
 
-          <form className={client_list_styles.form_product}>
+          <form
+            className={client_list_styles.form_product}
+            onSubmit={addProductToOrder}
+          >
             <input type="text" value={idCommande} name="idCommande" hidden />
+
             <select className={client_list_styles.select} name="libelleProduct">
               {produits.map((value, index) => {
                 return (
-                  <option key={index} value={value["Libelle"]}>
+                  <option key={index} value={value["idProduit"]}>
                     {value["Libelle"]}
                   </option>
                 );
               })}
             </select>
             <input type="text" name="quantite" placeholder="Quantité" />
-            <button
-              className={client_list_styles.button}
-              onClick={addProductToOrder}
-            >
+            <button type="submit" className={client_list_styles.button}>
               Ajouter
             </button>
           </form>
