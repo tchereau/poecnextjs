@@ -1,9 +1,9 @@
-import Commande from "../ERP/commandes/commandes";
+import Produits from "../ERP/Produits/Produits";
 import Bdd from "../bdd/bdd";
 
-export default class CommandeQuery {
+export default class ProduitQuery {
   //Get all clients
-  async getAllCommandes() {
+  async getAllProduit() {
     let conn;
     let rows;
     const bdd = new Bdd();
@@ -15,24 +15,24 @@ export default class CommandeQuery {
       console.log(e);
       return false;
     }
-    rows = await conn.query("SELECT * FROM commandes");
+    rows = await conn.query("SELECT * FROM produits");
 
     return rows;
   }
 
-  static async getCommandeById(id) {
+  static async getProduitById(id) {
     let conn;
     try {
       conn = await Bdd.pool.getConnection();
-      const rows = await conn.query("SELECT * FROM commandes WHERE idCommande = ?", [id]);
+      const rows = await conn.query("SELECT * FROM produits WHERE idProduit = ?", [id]);
       // for all rows create a new client object
-      let commande = new Commande(
-        rows[0].idCommande,
-        rows[0].NumeroCommandes,
-        rows[0].Client,
-        rows[0].Date
+      let produit = new Produits(
+        rows[0].idProduit,
+        rows[0].CodeProduit,
+        rows[0].Libelle,
+        rows[0].Prix
       );
-      return commande;
+      return produit;
     } catch (err) {
       throw err;
     } finally {
@@ -41,7 +41,7 @@ export default class CommandeQuery {
   }
 
   //Add a client
-  async addCommande(commande) {
+  async addProduit(produit) {
     let conn;
     const bdd = new Bdd();
     try {
@@ -53,12 +53,12 @@ export default class CommandeQuery {
       return false;
     }
     const result = await conn.query(
-      "INSERT INTO commandes (idCommande, NumeroCommandes, Client, Date) VALUES (?, ?, ?, ?)",
+      "INSERT INTO produits (idCommande, CodeProduit, Libelle, Prix) VALUES (?, ?, ?, ?)",
       [
-        commande.idCommande,
-        commande.NumeroCommandes,
-        commande.Client,
-        commande.Date
+        produit.idProduit,
+        produit.CodeProduit,
+        produit.Libelle,
+        produit.Prix
       ]
     );
     return result;
@@ -66,8 +66,8 @@ export default class CommandeQuery {
 
   //Update a client
 
-  async updateCommande(commande) {
-    console.log(`UPDATE commandes SET NumeroCommandes = "${commande.NumeroCommandes}", Client = "${commande.Client}", Date = "${commande.Date}" WHERE idClient = "${commande.idCommande}";`);
+  async updateProduit(produit) {
+    console.log(`UPDATE produits SET CodeProduit = "${produit.CodeProduit}", Libelle = "${produit.Libelle}", Prix = "${produit.Prix}" WHERE idProduit = "${produit.idProduit}";`);
     let conn;
     const bdd = new Bdd();
     try {
@@ -78,18 +78,18 @@ export default class CommandeQuery {
       console.log(e);
       return false;
     }
-    const result = await conn.query(`UPDATE commandes SET NumeroCommandes = "${commande.NumeroCommandes}", Client = "${commande.Client}", Date = "${commande.Date}" WHERE idCommande = "${commande.idCommande}";`);
+    const result = await conn.query(`UPDATE produits SET CodeProduit = "${produit.CodeProduit}", Libelle = "${produit.Libelle}", Prix = "${produit.Prix}" WHERE idProduit = "${produit.idProduit}";`);
     return result;
   }
 
   //Delete a client
 
-  async deleteCommande(id) {
+  async deleteProduit(id) {
     const bdd = new Bdd();
     let conn;
     try {
       conn = await bdd.pool.getConnection();
-      const result = await conn.query("DELETE FROM commandes WHERE idCommande = ?", [id]);
+      const result = await conn.query("DELETE FROM produits WHERE idProduit = ?", [id]);
       return result;
     } catch (err) {
       throw err;
