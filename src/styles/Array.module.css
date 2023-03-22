@@ -41,9 +41,26 @@
   color: white;
 }
 
-#search{
+#search {
   display: block;
   text-align: center;
   margin: auto;
   margin-top: 2rem;
+  padding: 0.5rem;
+  font-size: 1rem;
+}
+
+.product_container {
+  display: block;
+  margin-top: 2rem;
+}
+
+.form_product {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+  border: 1px solid black;
+  width: 50%;
+  margin: auto;
+  padding: 1rem;
 }

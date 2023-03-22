@@ -2,17 +2,19 @@
   min-height: 100vh;
 }
 
-.array_container{
+.array_container {
   margin-top: 5rem;
 }
 
-.vignette{
+.vignette {
   border: 1px solid #000;
   margin-left: 2rem;
   margin-top: 2rem;
   cursor: pointer;
+  display: inline;
+  padding: 1rem;
 }
 
-.vignette:hover{
-  transform: scale(1.1);
+.vignette:hover {
+  background-color: white;
 }
