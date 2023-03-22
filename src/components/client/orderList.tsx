@@ -28,7 +28,7 @@ export default function clientList({
   const [commandes, setCommandes] = useState<Commande[]>([]);
   var [currentCommandes, setCurrentCommandes] = useState<Commande[]>([]);
   function deleteCommande(idCommande: any) {
-    fetch("/api/commandeDelete", {
+    fetch("/api/commande/suppression", {
       method: "DELETE",
       headers: {
         Accept: "application/json",
@@ -44,7 +44,7 @@ export default function clientList({
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await fetch("/api/commandes", {
+        const response = await fetch("/api/commande/commandes", {
           method: "POST",
           headers: {
             Accept: "application/json",

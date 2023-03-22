@@ -46,7 +46,7 @@ export default function clientAdd({
       Telephone: Telephone,
     };
     async function postClient() {
-      const url = () => (useClient ? "/api/clientUpdate" : "/api/clientAdd");
+      const url = () => (useClient ? "/api/client/maj" : "/api/client/ajout");
       try {
         const response = await fetch(url(), {
           method: "POST",
