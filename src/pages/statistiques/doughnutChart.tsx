@@ -25,20 +25,6 @@ function Example() {
           },
         ],
       },
-      options: {
-        scales: {
-          xAxes: [
-            {
-              display: false,
-            },
-          ],
-          yAxes: [
-            {
-              display: false,
-            },
-          ],
-        },
-      },
     });
   }, []);
 

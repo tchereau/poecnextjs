@@ -83,6 +83,7 @@ export default function commandeAdd({
           <label className={client_add_style.label}>
             Client (idClient)
             <input
+              className={client_add_style.input}
               type="text"
               name="idClient"
               placeholder="idClient"
@@ -92,6 +93,7 @@ export default function commandeAdd({
           <label className={client_add_style.label}>
             Date
             <input
+              className={client_add_style.input}
               type="date"
               name="Date"
               placeholder="Date"
@@ -101,6 +103,7 @@ export default function commandeAdd({
           <label className={client_add_style.label}>
             Numéro de commande
             <input
+              className={client_add_style.input}
               type="text"
               name="NumeroCommandes"
               placeholder="Entreprise"

@@ -93,6 +93,7 @@ export default function clientAdd({
           <label className={client_add_style.label}>
             Siret
             <input
+              className={client_add_style.input}
               type="text"
               name="Siret"
               placeholder="Siret"
@@ -102,6 +103,7 @@ export default function clientAdd({
           <label className={client_add_style.label}>
             Entreprise
             <input
+              className={client_add_style.input}
               type="text"
               name="entreprise"
               placeholder="Entreprise"
@@ -112,6 +114,7 @@ export default function clientAdd({
           <label className={client_add_style.label}>
             Numéro de voie
             <input
+              className={client_add_style.input}
               type="text"
               name="numeroVoie"
               placeholder="Numéro de voie"
@@ -122,6 +125,7 @@ export default function clientAdd({
           <label className={client_add_style.label}>
             Rue
             <input
+              className={client_add_style.input}
               type="text"
               name="rue"
               placeholder="Rue"
@@ -132,6 +136,7 @@ export default function clientAdd({
           <label className={client_add_style.label}>
             Code postal
             <input
+              className={client_add_style.input}
               type="text"
               name="codePostal"
               placeholder="Code postal"
@@ -142,6 +147,7 @@ export default function clientAdd({
           <label className={client_add_style.label}>
             Ville
             <input
+              className={client_add_style.input}
               type="text"
               name="ville"
               placeholder="Ville"
@@ -152,6 +158,7 @@ export default function clientAdd({
           <label className={client_add_style.label}>
             Dirigeant
             <input
+              className={client_add_style.input}
               type="text"
               name="dirigeant"
               placeholder="Dirigeant"
@@ -162,6 +169,7 @@ export default function clientAdd({
           <label className={client_add_style.label}>
             Numéro de téléphone
             <input
+              className={client_add_style.input}
               type="text"
               name="numeroTelephone"
               placeholder="Numéro de téléphone"
