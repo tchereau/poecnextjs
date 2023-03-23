@@ -16,7 +16,7 @@ export default class ProduitQuery {
       return false;
     }
     rows = await conn.query("SELECT * FROM produits");
-
+    bdd.pool.end();
     return rows;
   }
 
@@ -24,7 +24,10 @@ export default class ProduitQuery {
     let conn;
     try {
       conn = await Bdd.pool.getConnection();
-      const rows = await conn.query("SELECT * FROM produits WHERE idProduit = ?", [id]);
+      const rows = await conn.query(
+        "SELECT * FROM produits WHERE idProduit = ?",
+        [id]
+      );
       // for all rows create a new client object
       let produit = new Produits(
         rows[0].idProduit,
@@ -36,7 +39,7 @@ export default class ProduitQuery {
     } catch (err) {
       throw err;
     } finally {
-      if (conn) return conn.end();
+      if (conn) return bdd.pool.end();
     }
   }
 
@@ -50,24 +53,23 @@ export default class ProduitQuery {
       });
     } catch (e) {
       console.log(e);
+      bdd.pool.end();
       return false;
     }
     const result = await conn.query(
       "INSERT INTO produits (idProduit, CodeProduit, Libelle, Prix) VALUES (?, ?, ?, ?)",
-      [
-        produit.idProduit,
-        produit.CodeProduit,
-        produit.Libelle,
-        produit.Prix
-      ]
+      [produit.idProduit, produit.CodeProduit, produit.Libelle, produit.Prix]
     );
+    bdd.pool.end();
     return result;
   }
 
   //Update a client
 
   async updateProduit(produit) {
-    console.log(`UPDATE produits SET CodeProduit = "${produit.CodeProduit}", Libelle = "${produit.Libelle}", Prix = "${produit.Prix}" WHERE idProduit = "${produit.idProduit}";`);
+    console.log(
+      `UPDATE produits SET CodeProduit = "${produit.CodeProduit}", Libelle = "${produit.Libelle}", Prix = "${produit.Prix}" WHERE idProduit = "${produit.idProduit}";`
+    );
     let conn;
     const bdd = new Bdd();
     try {
@@ -76,9 +78,14 @@ export default class ProduitQuery {
       });
     } catch (e) {
       console.log(e);
+      bdd.pool.end();
       return false;
     }
-    const result = await conn.query(`UPDATE produits SET CodeProduit = "${produit.CodeProduit}", Libelle = "${produit.Libelle}", Prix = "${produit.Prix}" WHERE idProduit = "${produit.idProduit}";`);
+
+    const result = await conn.query(
+      `UPDATE produits SET CodeProduit = "${produit.CodeProduit}", Libelle = "${produit.Libelle}", Prix = "${produit.Prix}" WHERE idProduit = "${produit.idProduit}";`
+    );
+    bdd.pool.end();
     return result;
   }
 
@@ -89,12 +96,16 @@ export default class ProduitQuery {
     let conn;
     try {
       conn = await bdd.pool.getConnection();
-      const result = await conn.query("DELETE FROM produits WHERE idProduit = ?", [id]);
+      const result = await conn.query(
+        "DELETE FROM produits WHERE idProduit = ?",
+        [id]
+      );
       return result;
     } catch (err) {
+      bdd.pool.end();
       throw err;
     } finally {
-      if (conn) return conn.end();
+      if (conn) return bdd.pool.end();
     }
   }
 }

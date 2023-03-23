@@ -201,9 +201,16 @@ export default function clientList({
         quantite: quantite,
       }),
     });*/
-    console.log(idCommande, idProduit, quantite);
   }
-  console.log(orderContent);
+
+  function getDate(date: any) {
+    var date = new Date(date);
+    var day = date.getDate();
+    var month = date.getMonth() + 1;
+    var year = date.getFullYear();
+    return day + "-" + month + "-" + year;
+  }
+
   return (
     <div className={client_list_styles.center}>
       <h2>Liste des Commandes</h2>
@@ -244,7 +251,9 @@ export default function clientList({
                     {value["NumeroCommandes"]}
                   </td>
                   <td className={client_list_styles.td}>{value["Client"]}</td>
-                  <td className={client_list_styles.td}>{value["Date"]}</td>
+                  <td className={client_list_styles.td}>
+                    {getDate(value["Date"])}
+                  </td>
                   <td>
                     <button
                       className={client_list_styles.button}

@@ -106,7 +106,7 @@ export default function commandeAdd({
               className={client_add_style.input}
               type="text"
               name="NumeroCommandes"
-              placeholder="Entreprise"
+              placeholder="Numero de commandes"
               defaultValue={useClient ? client[2] : ""}
             />
           </label>

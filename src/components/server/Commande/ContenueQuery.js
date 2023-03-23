@@ -13,10 +13,11 @@ export default class ContenueQuery {
       });
     } catch (e) {
       console.log(e);
+      bdd.pool.end();
       return false;
     }
     rows = await conn.query("SELECT * FROM ContenuCommande");
-
+    bdd.pool.end();
     return rows;
   }
 
@@ -29,6 +30,7 @@ export default class ContenueQuery {
         return conn;
       });
     } catch (e) {
+      bdd.pool.end();
       console.log(e);
       return false;
     }
@@ -48,6 +50,7 @@ export default class ContenueQuery {
       collection.push(contenue);
     });
     console.log(collection);
+    bdd.pool.end();
     return collection;
   }
 
@@ -60,6 +63,7 @@ export default class ContenueQuery {
         return conn;
       });
     } catch (e) {
+      bdd.pool.end();
       console.log(e);
       return false;
     }
@@ -67,6 +71,7 @@ export default class ContenueQuery {
       "INSERT INTO commandes (idCommande, idProduit, Qte) VALUES (?, ?, ?)",
       [contenue.idCommande, contenue.idProduit, contenue.Qte]
     );
+    bdd.pool.end();
     return result;
   }
 
@@ -89,6 +94,7 @@ export default class ContenueQuery {
     const result = await conn.query(
       `UPDATE commandes SET NumeroCommandes = "${commande.NumeroCommandes}", Client = "${commande.Client}", Date = "${commande.Date}" WHERE idCommande = "${commande.idCommande}";`
     );
+    bdd.pool.end();
     return result;
   }
 
@@ -107,7 +113,7 @@ export default class ContenueQuery {
     } catch (err) {
       throw err;
     } finally {
-      if (conn) return conn.end();
+      if (conn) return bdd.pool.end();
     }
   }
 }

@@ -16,14 +16,15 @@ export default class ClientQuery {
       return false;
     }
     rows = await conn.query("SELECT * FROM clients");
-
+    bdd.pool.end();
     return rows;
   }
 
   static async getClientById(id) {
     let conn;
+    let bdd = new Bdd();
     try {
-      conn = await Bdd.pool.getConnection();
+      conn = await bdd.pool.getConnection();
       const rows = await conn.query("SELECT * FROM client WHERE id = ?", [id]);
       // for all rows create a new client object
       let client = new Client(
@@ -38,7 +39,7 @@ export default class ClientQuery {
     } catch (err) {
       throw err;
     } finally {
-      if (conn) return conn.end();
+      if (conn) return bdd.pool.end();
     }
   }
 
@@ -74,7 +75,9 @@ export default class ClientQuery {
   //Update a client
 
   async updateClient(client) {
-    console.log(`UPDATE clients SET Siret = "${client.Siret}", NomSociete = "${client.NomSociete}", NumVoie = "${client.NumVoie}", Voie = "${client.NomVoie}", CodePostal = "${client.CodePostal}", Ville = "${client.Ville}", Dirigeant = "${client.Dirigeant}", Telephone ="${client.Telephone}" WHERE idClient = "${client.id}";`);
+    console.log(
+      `UPDATE clients SET Siret = "${client.Siret}", NomSociete = "${client.NomSociete}", NumVoie = "${client.NumVoie}", Voie = "${client.NomVoie}", CodePostal = "${client.CodePostal}", Ville = "${client.Ville}", Dirigeant = "${client.Dirigeant}", Telephone ="${client.Telephone}" WHERE idClient = "${client.id}";`
+    );
     let conn;
     const bdd = new Bdd();
     try {
@@ -83,25 +86,32 @@ export default class ClientQuery {
       });
     } catch (e) {
       console.log(e);
+      bdd.pool.end();
       return false;
     }
-    const result = await conn.query(`UPDATE clients SET Siret = "${client.Siret}", NomSociete = "${client.NomSociete}", NumVoie = "${client.NumVoie}", Voie = "${client.NomVoie}", CodePostal = "${client.CodePostal}", Ville = "${client.Ville}", Dirigeant = "${client.Dirigeant}", Telephone ="${client.Telephone}" WHERE idClient = "${client.id}";`);
+    const result = await conn.query(
+      `UPDATE clients SET Siret = "${client.Siret}", NomSociete = "${client.NomSociete}", NumVoie = "${client.NumVoie}", Voie = "${client.NomVoie}", CodePostal = "${client.CodePostal}", Ville = "${client.Ville}", Dirigeant = "${client.Dirigeant}", Telephone ="${client.Telephone}" WHERE idClient = "${client.id}";`
+    );
+    bdd.pool.end();
     return result;
   }
 
   //Delete a client
 
- async deleteClient(id) {
+  async deleteClient(id) {
     const bdd = new Bdd();
     let conn;
     try {
       conn = await bdd.pool.getConnection();
-      const result = await conn.query("DELETE FROM clients WHERE idClient = ?", [id]);
+      const result = await conn.query(
+        "DELETE FROM clients WHERE idClient = ?",
+        [id]
+      );
       return result;
     } catch (err) {
       throw err;
     } finally {
-      if (conn) return conn.end();
+      if (conn) return bdd.pool.end();
     }
   }
 }

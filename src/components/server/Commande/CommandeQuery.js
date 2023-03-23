@@ -13,10 +13,11 @@ export default class CommandeQuery {
       });
     } catch (e) {
       console.log(e);
+      bdd.pool.end();
       return false;
     }
     rows = await conn.query("SELECT * FROM commandes");
-
+    bdd.pool.end();
     return rows;
   }
 
@@ -24,7 +25,10 @@ export default class CommandeQuery {
     let conn;
     try {
       conn = await Bdd.pool.getConnection();
-      const rows = await conn.query("SELECT * FROM commandes WHERE idCommande = ?", [id]);
+      const rows = await conn.query(
+        "SELECT * FROM commandes WHERE idCommande = ?",
+        [id]
+      );
       // for all rows create a new client object
       let commande = new Commande(
         rows[0].idCommande,
@@ -36,7 +40,7 @@ export default class CommandeQuery {
     } catch (err) {
       throw err;
     } finally {
-      if (conn) return conn.end();
+      if (conn) return bdd.pool.end();
     }
   }
 
@@ -50,6 +54,7 @@ export default class CommandeQuery {
       });
     } catch (e) {
       console.log(e);
+      bdd.pool.end();
       return false;
     }
     const result = await conn.query(
@@ -58,16 +63,19 @@ export default class CommandeQuery {
         commande.idCommande,
         commande.NumeroCommandes,
         commande.Client,
-        commande.Date
+        commande.Date,
       ]
     );
+    bdd.pool.end();
     return result;
   }
 
   //Update a client
 
   async updateCommande(commande) {
-    console.log(`UPDATE commandes SET NumeroCommandes = "${commande.NumeroCommandes}", Client = "${commande.Client}", Date = "${commande.Date}" WHERE idClient = "${commande.idCommande}";`);
+    console.log(
+      `UPDATE commandes SET NumeroCommandes = "${commande.NumeroCommandes}", Client = "${commande.Client}", Date = "${commande.Date}" WHERE idClient = "${commande.idCommande}";`
+    );
     let conn;
     const bdd = new Bdd();
     try {
@@ -76,9 +84,13 @@ export default class CommandeQuery {
       });
     } catch (e) {
       console.log(e);
+      bdd.pool.end();
       return false;
     }
-    const result = await conn.query(`UPDATE commandes SET NumeroCommandes = "${commande.NumeroCommandes}", Client = "${commande.Client}", Date = "${commande.Date}" WHERE idCommande = "${commande.idCommande}";`);
+    const result = await conn.query(
+      `UPDATE commandes SET NumeroCommandes = "${commande.NumeroCommandes}", Client = "${commande.Client}", Date = "${commande.Date}" WHERE idCommande = "${commande.idCommande}";`
+    );
+    bdd.pool.end();
     return result;
   }
 
@@ -89,12 +101,15 @@ export default class CommandeQuery {
     let conn;
     try {
       conn = await bdd.pool.getConnection();
-      const result = await conn.query("DELETE FROM commandes WHERE idCommande = ?", [id]);
+      const result = await conn.query(
+        "DELETE FROM commandes WHERE idCommande = ?",
+        [id]
+      );
       return result;
     } catch (err) {
       throw err;
     } finally {
-      if (conn) return conn.end();
+      if (conn) return bdd.pool.end();
     }
   }
 }
