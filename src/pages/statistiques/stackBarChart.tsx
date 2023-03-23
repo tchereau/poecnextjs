@@ -1,10 +1,32 @@
 import { useEffect } from "react";
 import { Chart, registerables } from "chart.js";
 import statistiques_style from "../../styles/Statistiques.module.css";
+import { useState } from "react";
 
 Chart.register(...registerables);
 
-function stackBarChart() {
+interface Commandes {
+  commandes: any;
+}
+function stackBarChart(commandes: Commandes) {
+  const [orderByMonth, setOrderByMonth] = useState<any>([]);
+
+  function getData() {
+    var orders = [[], [], [], [], [], [], [], [], [], [], [], []];
+
+    commandes.commandes.map((commande: any) => {
+      console.log(commande.Date);
+      const date = new Date(commande.Date);
+      var mois = date.getMonth();
+      orders[mois].push(commande);
+    });
+    return orders;
+  }
+
+  const orders = getData();
+  console.log(orders);
+  console.log(orders[0]);
+
   useEffect(() => {
     if (document.getElementById("myChart")) {
       var ctx = document.getElementById("myChart").getContext("2d");
@@ -13,51 +35,42 @@ function stackBarChart() {
       type: "bar",
       data: {
         labels: [
-          "Sunday",
-          "Monday",
-          "Tuesday",
-          "Wednesday",
-          "Thursday",
-          "Friday",
-          "Saturday",
+          "Janvier",
+          "Février",
+          "Mars",
+          "Avril",
+          "Mai",
+          "Juin",
+          "Juillet",
+          "Août",
+          "Septembre",
+          "Octobre",
+          "Novembre",
+          "Décembre",
         ],
         datasets: [
           {
-            data: [70, 90, 44, 60, 83, 90, 100],
+            data: [
+              orders[0].length,
+              orders[1].length,
+              orders[2].length,
+              orders[3].length,
+              orders[4].length,
+              orders[5].length,
+              orders[6].length,
+              orders[7].length,
+              orders[8].length,
+              orders[9].length,
+              orders[10].length,
+              orders[11].length,
+            ],
+
             label: "Accepted",
             borderColor: "#3cba9f",
             backgroundColor: "#71d1bd",
             borderWidth: 2,
           },
-          {
-            data: [10, 21, 60, 44, 17, 21, 17],
-            label: "Pending",
-            borderColor: "#ffa500",
-            backgroundColor: "#ffc04d",
-            borderWidth: 2,
-          },
-          {
-            data: [6, 3, 2, 2, 7, 0, 16],
-            label: "Rejected",
-            borderColor: "#c45850",
-            backgroundColor: "#d78f89",
-            borderWidth: 2,
-          },
         ],
-      },
-      options: {
-        scales: {
-          xAxes: [
-            {
-              stacked: true,
-            },
-          ],
-          yAxes: [
-            {
-              stacked: true,
-            },
-          ],
-        },
       },
     });
   }, []);

@@ -35,7 +35,8 @@ export default function clientList({
   const [produits, setProduits] = useState<Produit[]>([]);
   const [viewProductisOpen, setViewProductisOpen] = useState(false);
   const [idCommande, setIdCommande] = useState(0);
-  var [currentCommandes, setCurrentCommandes] = useState<Commande[]>([]);
+  const [currentCommandes, setCurrentCommandes] = useState<Commande[]>([]);
+  const [orderContent, setOrderContent] = useState<any>([]);
   function deleteCommande(idCommande: any) {
     fetch("/api/commande/suppresion", {
       method: "DELETE",
@@ -70,6 +71,36 @@ export default function clientList({
 
         const data = await response.json();
         setCommandes(data.commandes);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await fetch("/api/commande/contenue", {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            authorization: cookies.token,
+          },
+          body: JSON.stringify({
+            id: 3,
+          }),
+        });
+
+        if (!response.ok) {
+          throw new Error(
+            "Une erreur s'est produite lors de la récupération des données."
+          );
+        }
+
+        const data = await response.json();
+        setOrderContent(data.contenue);
       } catch (error) {
         console.error(error);
       }
@@ -165,14 +196,14 @@ export default function clientList({
         authorization: cookies.token,
       },
       body: JSON.stringify({
-        idCommande: idCommande,
+        idCommande: idCommande,ù
         idProduit: idProduit,
         quantite: quantite,
       }),
     });*/
     console.log(idCommande, idProduit, quantite);
   }
-
+  console.log(orderContent);
   return (
     <div className={client_list_styles.center}>
       <h2>Liste des Commandes</h2>
