@@ -152,17 +152,6 @@ export default function Home() {
         !orderAddIsOpen && (
           <div>
             <h2>Bienvenue sur HSTAR, le CRM qu'on M</h2>
-
-            <div>
-              <Image
-                src="/vignetteClientList.png"
-                alt="Picture of the author"
-                unoptimized={true}
-                height={250}
-                width={400}
-                className={home_style.vignette}
-              />
-            </div>
           </div>
         )}
     </>

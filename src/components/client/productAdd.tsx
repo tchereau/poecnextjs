@@ -85,6 +85,7 @@ export default function productAdd({
           <label className={client_add_style.label}>
             idProduit
             <input
+              className={client_add_style.input}
               type="text"
               name="idProduit"
               placeholder="idProduit"
@@ -94,6 +95,7 @@ export default function productAdd({
           <label className={client_add_style.label}>
             CodeProduit
             <input
+              className={client_add_style.input}
               type="text"
               name="CodeProduit"
               placeholder="CodeProduit"
@@ -103,6 +105,7 @@ export default function productAdd({
           <label className={client_add_style.label}>
             Libelle
             <input
+              className={client_add_style.input}
               type="text"
               name="Libelle"
               placeholder="Libelle"
@@ -112,6 +115,7 @@ export default function productAdd({
           <label className={client_add_style.label}>
             Prix
             <input
+              className={client_add_style.input}
               type="text"
               name="Prix"
               placeholder="Prix"

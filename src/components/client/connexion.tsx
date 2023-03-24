@@ -10,6 +10,8 @@ interface ModalProps {
 
 export default function Connexion({ isOpen, onClose }: ModalProps) {
   const [cookies, setCookie] = useCookies();
+  const [error, setError] = useState();
+
   async function login(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
@@ -29,7 +31,7 @@ export default function Connexion({ isOpen, onClose }: ModalProps) {
       body: JSON.stringify({ username: username, password: password }),
     }).then((res) => res.json());
     if (content.error) {
-      alert("Erreur de connexion");
+      setError[content.error];
     } else if (content.result) {
       setCookie("token", content.result, { path: "/" });
       setCookie("username", username, { path: "/" });
@@ -43,7 +45,8 @@ export default function Connexion({ isOpen, onClose }: ModalProps) {
       {isOpen && (
         <div>
           <div className={styles.container}>
-            <h2 className={styles.titre}>Connexion / Inscription</h2>
+            <h2 className={styles.titre}>Connexion</h2>
+            <p>{error}</p>
             <form className={styles.form} onSubmit={login}>
               <input
                 className={styles.input}
@@ -57,9 +60,7 @@ export default function Connexion({ isOpen, onClose }: ModalProps) {
                 type="text"
                 placeholder="mot de passe"
               />
-              <Link href="/" className={styles.link}>
-                S'inscrire
-              </Link>
+
               <div className={styles.btncontainer}>
                 <button onClick={onClose} className={styles.bouton}>
                   Annuler

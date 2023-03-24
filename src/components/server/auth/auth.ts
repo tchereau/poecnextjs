@@ -1,32 +1,37 @@
-import Bdd from '../bdd/bdd.js';
-import jwt from 'jsonwebtoken'
-import { use } from 'react';
+import Bdd from "../bdd/bdd.js";
+import jwt from "jsonwebtoken";
+import { use } from "react";
 
-
-
-export default class Auth{
-
+export default class Auth {
   async generateToken(user: String) {
-    console.log(user)
-    const token = jwt.sign({ user: user, exp: Math.floor(Date.now() / 1000) + (60 * 60), }, process.env.JWT_SECRET)
+    console.log(user);
+    const token = jwt.sign(
+      { user: user, exp: Math.floor(Date.now() / 1000) + 60 * 60 },
+      process.env.JWT_SECRET
+    );
     return token;
   }
-  
+
   async VerifLogin(username: String, password: String) {
     const bdd = new Bdd();
     let conn;
-    try{
-      conn = await bdd.pool.getConnection().then(async conn => {return conn;})
+    try {
+      conn = await bdd.pool.getConnection().then(async (conn) => {
+        return conn;
+      });
       //console.log(conn)
-    }catch(e){
+    } catch (e) {
       console.log(e);
       return false;
     }
 
     let rows;
-    try{
-      rows = await conn.query("SELECT identifiant FROM users WHERE identifiant = ? AND motdepasse = ?",[username, password]);
-    }catch(e){
+    try {
+      rows = await conn.query(
+        "SELECT identifiant FROM users WHERE identifiant = ? AND motdepasse = ?",
+        [username, password]
+      );
+    } catch (e) {
       console.log(e);
 
       return false;
@@ -36,16 +41,17 @@ export default class Auth{
       const user = {
         username: rows[0].identifiant,
       };
-      return true
+      bdd.pool.end();
+      return true;
     } else {
+      bdd.pool.end();
       return false;
     }
   }
 
   async Login(username: String, password: String) {
-
     let user = await this.VerifLogin(username, password);
-    if(user === false){
+    if (user === false) {
       return false;
     }
     // generate token
@@ -54,16 +60,21 @@ export default class Auth{
 
     // save token in db
     const bdd = new Bdd();
-    const conn = await bdd.pool.getConnection().then(async conn => {return conn;})
+    const conn = await bdd.pool.getConnection().then(async (conn) => {
+      return conn;
+    });
 
-
-    try{
-      await conn.query("UPDATE users SET token = ? WHERE identifiant = ?", [token, username]);
-    }catch(e){
+    try {
+      await conn.query("UPDATE users SET token = ? WHERE identifiant = ?", [
+        token,
+        username,
+      ]);
+    } catch (e) {
       console.log(e);
+      bdd.pool.end();
       return false;
     }
+    bdd.pool.end();
     return token;
   }
-
 }

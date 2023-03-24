@@ -17,16 +17,26 @@ interface Commande {
   Date: string;
 }
 
+interface Produit {
+  idProduit: number;
+  CodeProduit: number;
+  Libelle: string;
+  Prix: number;
+}
+
 export default function clientList({
   openEdit,
   getClient,
   closeList,
-  openClientView,
   closeView,
 }: OrderProps) {
   const [cookies, setCookie] = useCookies();
   const [commandes, setCommandes] = useState<Commande[]>([]);
-  var [currentCommandes, setCurrentCommandes] = useState<Commande[]>([]);
+  const [produits, setProduits] = useState<Produit[]>([]);
+  const [viewProductisOpen, setViewProductisOpen] = useState(false);
+  const [idCommande, setIdCommande] = useState(0);
+  const [currentCommandes, setCurrentCommandes] = useState<Commande[]>([]);
+  const [orderContent, setOrderContent] = useState<any>([]);
   function deleteCommande(idCommande: any) {
     fetch("/api/commande/suppresion", {
       method: "DELETE",
@@ -65,6 +75,36 @@ export default function clientList({
         console.error(error);
       }
     }
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await fetch("/api/commande/contenue", {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            authorization: cookies.token,
+          },
+          body: JSON.stringify({
+            id: 3,
+          }),
+        });
+
+        if (!response.ok) {
+          throw new Error(
+            "Une erreur s'est produite lors de la récupération des données."
+          );
+        }
+
+        const data = await response.json();
+        setOrderContent(data.contenue);
+      } catch (error) {
+        console.error(error);
+      }
+    }
 
     fetchData();
   }, []);
@@ -90,6 +130,34 @@ export default function clientList({
   }, []);
 
   useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await fetch("/api/produit/produits", {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            authorization: cookies.token,
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error(
+            "Une erreur s'est produite lors de la récupération des données."
+          );
+        }
+
+        const data = await response.json();
+        setProduits(data.produits);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    fetchData();
+  }, []);
+
+  useEffect(() => {
     setCurrentCommandes(commandes);
     setCurrentCommandes((prevCommandeTab) =>
       prevCommandeTab.filter((commande) => {
@@ -108,6 +176,40 @@ export default function clientList({
       })
     );
   }, [query]);
+
+  function openProductView(idCommande: number) {
+    setViewProductisOpen(true);
+    setIdCommande(idCommande);
+  }
+
+  function addProductToOrder(e: any) {
+    e.preventDefault();
+    const data = new FormData(e.currentTarget);
+    const idCommande = data.get("idCommande");
+    const idProduit = data.get("libelleProduct");
+    const quantite = data.get("quantite");
+    /* fetch("/api/commande/ajoutProduit", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        authorization: cookies.token,
+      },
+      body: JSON.stringify({
+        idCommande: idCommande,ù
+        idProduit: idProduit,
+        quantite: quantite,
+      }),
+    });*/
+  }
+
+  function getDate(date: any) {
+    var date = new Date(date);
+    var day = date.getDate();
+    var month = date.getMonth() + 1;
+    var year = date.getFullYear();
+    return day + "-" + month + "-" + year;
+  }
 
   return (
     <div className={client_list_styles.center}>
@@ -137,10 +239,9 @@ export default function clientList({
                 <tr
                   key={index}
                   className={client_list_styles.tr}
-                  onClick={() => {
-                    openClientView();
-                    getClient(value);
-                    closeList();
+                  onClick={(e) => {
+                    e.preventDefault();
+                    openProductView(value.idCommande);
                   }}
                 >
                   <td className={client_list_styles.td}>
@@ -150,7 +251,9 @@ export default function clientList({
                     {value["NumeroCommandes"]}
                   </td>
                   <td className={client_list_styles.td}>{value["Client"]}</td>
-                  <td className={client_list_styles.td}>{value["Date"]}</td>
+                  <td className={client_list_styles.td}>
+                    {getDate(value["Date"])}
+                  </td>
                   <td>
                     <button
                       className={client_list_styles.button}
@@ -182,6 +285,32 @@ export default function clientList({
           </tbody>
         </table>
       </div>
+      {viewProductisOpen && (
+        <div className={client_list_styles.product_container}>
+          <h3>Commande n°{idCommande}</h3>
+
+          <form
+            className={client_list_styles.form_product}
+            onSubmit={addProductToOrder}
+          >
+            <input type="text" value={idCommande} name="idCommande" hidden />
+
+            <select className={client_list_styles.select} name="libelleProduct">
+              {produits.map((value, index) => {
+                return (
+                  <option key={index} value={value["idProduit"]}>
+                    {value["Libelle"]}
+                  </option>
+                );
+              })}
+            </select>
+            <input type="text" name="quantite" placeholder="Quantité" />
+            <button type="submit" className={client_list_styles.button}>
+              Ajouter
+            </button>
+          </form>
+        </div>
+      )}
     </div>
   );
 }
